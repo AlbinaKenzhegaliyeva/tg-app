@@ -8,7 +8,7 @@
             <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
         </div>
         <div class="greetings__info" v-if="isVisible">
-            <span>Одним крылом он поддерживает высокие нагрузки, другjим — здоровую атмосферу в команде. Оптимист,
+            <span>Одним крылом он поддерживает высокие нагрузки, другим — здоровую атмосферу в команде. Оптимист,
                 юморист и просто хороший <span class="crossed-text">человек</span> гусь!</span>
         </div>
         <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
