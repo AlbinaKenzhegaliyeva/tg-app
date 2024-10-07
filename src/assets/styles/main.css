@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'gteestiprodisplay';
+    src: url('@/assets/fonts/gteestiprodisplay.otf') format('opentype');
+}
+
+:root {
+    --gte: 'gteestiprodisplay', sans-serif;
+}
