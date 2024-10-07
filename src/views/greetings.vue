@@ -2,11 +2,7 @@
     <div class="greetings">
         <img src="@/assets/back.png" alt="back" class="greetings__background">
         <img src="@/assets/hello.svg" alt="goose" class="greetings__gosha_begin first-goose">
-        <img :src="currentImage" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose"
-            v-if="!goose">
-        <img src="@/assets/сorobchik.svg" alt="box" class="greetings__corobchik" v-if="corobchik">
-        <img src="@/assets/gosha.svg" alt="goose" class="third-goose" v-show="goose">
-
+        <img src="@/assets/open_eyes.svg" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose" v-show="!goose && !smirk" >
         <div class="greetings__dialog" v-if="isVisible">
             <img src="@/assets/dialog.svg" alt="dialog" class="greetings__dialog-bubble">
             <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
@@ -17,6 +13,8 @@
         </div>
         <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
             @click="moveGoose" ref="btn">Привет!</button>
+        <img src="@/assets/smirk.svg" alt="goose" class="goose-image goose-image-2" v-show="smirk">
+        <img src="@/assets/сorobchik.svg" alt="box" class="greetings__corobchik" v-if="corobchik">
         <div class="greetings__about-korobchik" v-if="corobchikVisible">
             <img src="@/assets/text.svg" alt="dialog" class="greetings__about-korobchik-bubble">
             <div class="greetings__about-korobchik-text">
@@ -28,6 +26,7 @@
         </div>
         <button class="greetings__btn-korobchik" v-if="corobchikVisible" @mousedown="sayHello" @mouseup="resetStyle"
             @click="goToNextScreen" ref="btn">Ого, сколько всего</button>
+        <img src="@/assets/gosha.svg" alt="goose" class="third-goose" v-show="goose">
         <div class="greetings__order-korobchik" v-show="orderVisible">
             <img src="@/assets/text2.svg" alt="dialog" class="greetings__order-korobchik-bubble">
             <span>В этой игре тебе предстоит доставить Коробчика имениннику.</span>
@@ -44,10 +43,10 @@ export default {
         return {
             isVisible: true,
             corobchikVisible: false,
-            currentImage: "/src/assets/gosha.svg",
             orderVisible: false,
             corobchik: false,
             goose: false,
+            smirk: false,
         }
     },
     methods: {
@@ -65,31 +64,29 @@ export default {
             let goose = this.$refs.secondGoose;
             goose.classList.add('diagonal-move');
             this.isVisible = false;
-            goose.addEventListener('transitionend', this.changeImage);
+            goose.addEventListener('transitionend', this.nextStep);
         },
-        changeImage() {
+        nextStep() {
             let goose = this.$refs.secondGoose;
-            goose.style.transition = 'opacity 0.5s ease-in-out';
-            goose.style.opacity = 0;
+            goose.removeEventListener('transitionend', this.nextStep);
+            this.corobchikVisible = true;
+            this.corobchik = true;
             setTimeout(() => {
-                this.currentImage = "/src/assets/smirk.svg";
-                goose.style.opacity = 1;
-                this.corobchikVisible = true;
-                this.corobchik = true;
+                this.smirk = true;
             }, 500);
-            goose.removeEventListener('transitionend', this.changeImage);
         },
         goToNextScreen() {
             this.corobchikVisible = false;
             this.orderVisible = true;
             this.corobchik = true;
             this.goose = true;
+            this.smirk = false;
 
-              // Убедимся, что анимация применится корректно
+            // Убедимся, что анимация применится корректно
             this.$nextTick(() => {
-            let thirdGoose = this.$el.querySelector('.third-goose');
-            thirdGoose.classList.add('is-visible');
-        });
+                let thirdGoose = this.$el.querySelector('.third-goose');
+                thirdGoose.classList.add('is-visible');
+            });
         },
     }
 }
@@ -122,12 +119,13 @@ body {
 
     &__gosha_after {
         position: absolute;
-        left: 40%;
-        top: 35%;
+        left: 50%;
+        top: 45%;
+        //top: 40%;
         right: 0;
         bottom: 0;
         width: 100%;
-        transform: translateX(-50%) scale(1);
+        transform: translateX(-50%) scale(1.4);
         transition: transform 3s ease-in-out;
         animation: zoomIn 6s forwards;
     }
@@ -139,9 +137,9 @@ body {
 
         &-bubble {
             position: absolute;
-            top: 190px;
+            top: 150px;
             right: 0;
-            left: 10px;
+            left: 0;
             width: 100%;
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
@@ -150,7 +148,7 @@ body {
 
         span {
             position: absolute;
-            top: 215px;
+            top: 170px;
             // right: 40px;
             left: 40px;
             font-family: var(--gte);
@@ -337,7 +335,7 @@ body {
     transition: opacity 0.5s ease-in-out;
     position: absolute;
     left: 35%;
-    top: 30%;
+    top: 32%;
     right: 0;
     bottom: 0;
 
@@ -393,6 +391,14 @@ body {
 
 .diagonal-move {
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    transform: translate(-90px, -150px) scale(0.7);
+    transform: translate(-90px, -150px) scale(0.9);
+}
+
+.goose-image {
+    position: absolute;
+    top: 32%;
+    left: 33%;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
 }
 </style>
