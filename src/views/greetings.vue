@@ -32,7 +32,7 @@
             <span>В этой игре тебе предстоит доставить Коробчика имениннику.</span>
         </div>
         <button class="greetings__btn-order-korobchik" v-show="orderVisible" @mousedown="sayHello" @mouseup="resetStyle"
-            ref="btn">Не терпится начать!</button>
+            ref="btn" @click="goTo">Не терпится начать!</button>
     </div>
 </template>
 
@@ -87,6 +87,9 @@ export default {
                 let thirdGoose = this.$el.querySelector('.third-goose');
                 thirdGoose.classList.add('is-visible');
             });
+        },
+        goTo() {
+            this.$router.push('/chat');
         },
     }
 }
