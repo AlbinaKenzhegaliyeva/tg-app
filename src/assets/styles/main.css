@@ -6,3 +6,8 @@
 :root {
     --gte: 'gteestiprodisplay', sans-serif;
 }
+
+
+body {
+    margin: 0;
+}
