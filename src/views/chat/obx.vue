@@ -2,25 +2,23 @@
     <div class="page">
         <TheHeaderChat />
         <div class="chat">
-            <div class="chat__right chat__first" :class="{ 'move-up': chatUp }">
+            <div class="chat__right" :class="{ 'move-up': chatUp }">
                 <div class="chat__right-bubble right-text-1">
                     <TheChatWhite>
                         <template #chattng__text>
-                            <span>Пора доставить подарок! Но на складе столько всего… боюсь запутаться. Хорошо, что с
-                                нами
-                                Гоша,
-                                он проводит.</span>
+                            <span>Пора доставить подарок! Но на складе столько всего… боюсь запутаться. Хорошо, что
+                                с нами Гоша, он проводит.</span>
                         </template>
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/avatar_b.svg" alt="avatar">
+                    <img src="@/assets/avatar_b.png" alt="avatar">
                 </div>
             </div>
 
             <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
                 <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
@@ -30,7 +28,7 @@
 
             <div class="chat__left show-left-1" v-if="showLeft" :class="{ 'move-up': chatUp }">
                 <div class="chat__left-bubble left-text-1">
-                    <TheChatBlue>
+                    <TheChatBlue :isLast="true">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <img src="@/assets/chat1.svg" alt="pic">
@@ -41,7 +39,7 @@
                     </TheChatBlue>
                 </div>
                 <div class="chat__left-avatar left-avatar-1">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
             </div>
 
@@ -54,18 +52,19 @@
                 <div class="chat__right-bubble right-text-2">
                     <TheChatWhite>
                         <template #chattng__text>
-                            <span>Здесь же тысячи посылок, как бы нам всем поместиться в фургоны для доставки?</span>
+                            <span>Здесь же тысячи посылок, как бы нам всем поместиться в фургоны для
+                                доставки?</span>
                         </template>
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-2">
-                    <img src="@/assets/avatar_b.svg" alt="avatar">
+                    <img src="@/assets/avatar_b.png" alt="avatar">
                 </div>
             </div>
 
             <div class="chat__note left-note" v-if="showSecondNote" @animationend="handleSecondNoteAnimationEnd">
                 <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
@@ -75,7 +74,8 @@
 
             <div class="chat__left" v-if="showLeftNewChat" :class="{ 'move-up': chatUp }">
                 <div class="chat__left-bubble">
-                    <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]">
+                    <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]"
+                        :isLast="index === chatMessages.length - 1">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <span>{{ message }}</span>
@@ -84,7 +84,7 @@
                     </TheChatBlue>
                 </div>
                 <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
             </div>
 
@@ -101,13 +101,13 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-3">
-                    <img src="@/assets/avatar_b.svg" alt="avatar">
+                    <img src="@/assets/avatar_b.png" alt="avatar">
                 </div>
             </div>
 
             <div class="chat__note left-note-final" v-if="showThirdNote" @animationend="handleSecondNoteAnimationEnd">
                 <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
@@ -125,7 +125,7 @@
                             </div>
                         </template>
                     </TheChatBlue>
-                    <TheChatBlue>
+                    <TheChatBlue :isLast="true">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <img src="@/assets/obx.svg" alt="pic">
@@ -135,17 +135,15 @@
                     </TheChatBlue>
                 </div>
                 <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.svg" alt="avatar">
+                    <img src="@/assets/avatar_g.png" alt="avatar">
                 </div>
             </div>
 
             <div>
-                <button class="chat__button" v-if="showButton">Начать игру</button>
+                <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
             </div>
-
         </div>
     </div>
-
 </template>
 
 <script>
@@ -210,6 +208,12 @@ export default {
         }, 10000); // Задержка до завершения всех анимаций
     },
     methods: {
+        triggerMoveUp() {
+            this.scrollUp = false;
+            setTimeout(() => {
+                this.scrollUp = true;
+            }, 2000);
+        },
         changeStatus() {
             this.scrollUp = !this.scrollUp;
         },
@@ -239,7 +243,7 @@ export default {
                     }, index * 1000);
                 });
             }, 2000);
-            this.changeStatus();
+            // this.changeStatus();
             setTimeout(() => {
                 this.showTap2 = true;
             }, 4000);
@@ -255,7 +259,6 @@ export default {
                 this.showLeftFinal = true;
                 this.showFinalMessages();
             }, 6000);
-
         },
         showFinalMessages() {
             setTimeout(() => {
@@ -268,6 +271,9 @@ export default {
             setTimeout(() => {
                 this.showButton = true;
             }, 6000);
+        },
+        goTo() {
+            this.$router.push('/chat/sort');
         },
     }
 }
@@ -284,10 +290,13 @@ export default {
     overflow: hidden;
 }
 
+// .chat__right,
+// .chat__left {
+//     border: 1px solid red;
+// }
+
 .chat {
-    padding: 80px 7px 0;
-    transition: transform 0.5s ease;
-    position: relative;
+    padding: 100px 7px 0;
 
     &__button {
         border-radius: 5px;
@@ -300,15 +309,9 @@ export default {
         color: #fff;
         border: none;
         padding: 11px 124px;
-        // width: 100%;
-        position: absolute;
-        bottom: 20px;
-        margin: 0 13px;
+        width: 100%;
+        margin: 34px 0 50px 0;
         white-space: nowrap;
-    }
-
-    &__first {
-        margin: 17px 0 0 0;
     }
 
     &__right {
@@ -319,6 +322,8 @@ export default {
             font-size: 13px;
             line-height: 120%;
             color: #000;
+            position: relative;
+            z-index: 100;
         }
 
         &-bubble {
@@ -369,6 +374,8 @@ export default {
                     font-size: 13px;
                     line-height: 120%;
                     color: #fff;
+                    position: relative;
+                    z-index: 100;
                 }
             }
         }
@@ -386,7 +393,7 @@ export default {
         animation: heartbeat2 2s infinite;
         cursor: pointer;
         position: relative;
-        bottom: 50px;
+        bottom: 40px;
         left: 0;
         display: flex;
         justify-content: flex-end;
@@ -470,20 +477,17 @@ export default {
     }
 }
 
-/* Анимация для правого аватара */
 .right-avatar-1 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 0.5s;
 }
 
-/* Анимация для текста с задержкой после аватара */
 .right-text-1 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 2s;
     opacity: 0;
 }
 
-/* Анимация исчезновения блока note через 3 секунды */
 .left-note {
     animation: fadeOut 1s ease-in forwards;
     animation-delay: 4s;
@@ -494,76 +498,62 @@ export default {
     animation: fadeOut 1s ease-in forwards;
     animation-delay: 4s;
     opacity: 1;
-    position: absolute;
-    bottom: 20px;
 }
 
-/* Анимация появления левой стороны */
 .show-left-1 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 6s;
     opacity: 0;
 }
 
-/* Анимация появления аватара на левой стороне */
-.left-avatar-1 {
-    animation: fadeIn 1s ease-in-out forwards;
-    animation-delay: 5s;
-}
+// .left-avatar-1 {
+//     animation: fadeIn 1s ease-in-out forwards;
+//     animation-delay: 5s;
+// }
 
-/* Анимация появления текста на левой стороне */
-.left-text-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 5s;
-    opacity: 0;
-}
+// .left-text-1 {
+//     animation: fadeIn 1s ease-in forwards;
+//     animation-delay: 5s;
+//     opacity: 0;
+// }
 
-/* Анимация для нового аватара */
 .right-avatar-2 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 1s;
 }
 
-/* Анимация для нового текста */
 .right-text-2 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 2s;
-    /* Задержка для нового текста */
 }
 
-/* Анимация для нового левого чата */
-.show-left-2 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 8s;
-    /* Задержка для нового левого чата */
-}
+// .show-left-2 {
+//     animation: fadeIn 1s ease-in forwards;
+//     animation-delay: 8s;
+//     /* Задержка для нового левого чата */
+// }
 
-/* Анимация для нового левого аватара */
-.left-avatar-2 {
-    animation: fadeIn 1s ease-in-out forwards;
-    animation-delay: 8s;
-    /* Задержка для нового левого аватара */
-}
+// .left-avatar-2 {
+//     animation: fadeIn 1s ease-in-out forwards;
+//     animation-delay: 8s;
+//     /* Задержка для нового левого аватара */
+// }
 
-/* Анимация для нового левого текста */
-.left-text-2 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 10s;
-}
+// .left-text-2 {
+//     animation: fadeIn 1s ease-in forwards;
+//     animation-delay: 10s;
+// }
 
-/* Анимация для нового аватара */
 .right-avatar-3 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 1s;
 }
 
-/* Анимация для нового текста */
 .right-text-3 {
     animation: fadeIn 1s ease-in forwards;
     animation-delay: 2s;
-    position: absolute;
-    right: 60px;
-    bottom: 20px;
+    justify-content: flex-end;
+    padding: 0 50px 0 0;
 }
 
 .pen-animation {
@@ -571,8 +561,20 @@ export default {
 }
 
 .move-up {
-    transform: translateY(-80px);
-    animation: 0;
+    // transform: translateY(-80px);
+    // animation: 0;
+    // opacity: 1;
+    animation: moveUp 0.5s ease forwards;
     opacity: 1;
+}
+
+@keyframes moveUp {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-60px);
+    }
 }
 </style>

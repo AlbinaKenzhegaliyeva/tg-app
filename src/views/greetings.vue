@@ -1,8 +1,9 @@
 <template>
     <div class="greetings">
         <img src="@/assets/back.png" alt="back" class="greetings__background">
-        <img src="@/assets/hello.svg" alt="goose" class="greetings__gosha_begin first-goose">
-        <img src="@/assets/open_eyes.svg" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose" v-show="!goose && !smirk" >
+        <img src="@/assets/hello.png" alt="goose" class="greetings__gosha_begin first-goose">
+        <img src="@/assets/open_eyes.png" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose"
+            v-show="!goose && !smirk">
         <div class="greetings__dialog" v-if="isVisible">
             <img src="@/assets/dialog.svg" alt="dialog" class="greetings__dialog-bubble">
             <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
@@ -13,14 +14,14 @@
         </div>
         <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
             @click="moveGoose" ref="btn">Привет!</button>
-        <img src="@/assets/smirk.svg" alt="goose" class="goose-image goose-image-2" v-show="smirk">
-        <img src="@/assets/сorobchik.svg" alt="box" class="greetings__corobchik" v-if="corobchik">
+        <img src="@/assets/smirk.svg" alt="goose" class="goose-image" v-show="smirk">
+        <img src="@/assets/corobchik.svg" alt="box" class="greetings__corobchik" v-if="corobchik">
         <div class="greetings__about-korobchik" v-if="corobchikVisible">
             <img src="@/assets/text.svg" alt="dialog" class="greetings__about-korobchik-bubble">
             <div class="greetings__about-korobchik-text">
                 <span>А это Коробчик — подарок на день рождения и один из 6 100 000 ежедневных заказов на
                     Ozon.</span>
-                <span>Над оперативностью доставки работают  6 000+ ИТ-специалистов в сложной системе с  6 100
+                <span>Над оперативностью доставки работают 6 000+ ИТ-специалистов в сложной системе с 6 100
                     микросервисами.</span>
             </div>
         </div>
@@ -89,7 +90,7 @@ export default {
             });
         },
         goTo() {
-            this.$router.push('/chat');
+            this.$router.push('/chat/obx');
         },
     }
 }
@@ -148,8 +149,8 @@ export default {
         span {
             position: absolute;
             top: 170px;
-            // right: 40px;
-            left: 40px;
+            left: 35px;
+            right: 35px;
             font-family: var(--gte);
             font-weight: 400;
             font-size: 20px;
@@ -221,7 +222,6 @@ export default {
         position: absolute;
         left: 0;
         top: 55%;
-        right: 0;
         animation: fadeInBox 1s forwards;
         animation-delay: 0.5s;
     }
@@ -243,7 +243,7 @@ export default {
             position: absolute;
             top: 120px;
             left: 20px;
-            right: 20px;
+            right: 40px;
 
             span {
                 font-family: var(--gte);
@@ -333,10 +333,12 @@ export default {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     position: absolute;
-    left: 35%;
-    top: 32%;
+    left: 22%;
+    top: 30%;
     right: 0;
-    bottom: 0;
+
+    width: 351px;
+    height: 481px;
 
     &.is-visible {
         opacity: 1;
@@ -395,9 +397,13 @@ export default {
 
 .goose-image {
     position: absolute;
-    top: 32%;
-    left: 33%;
+    top: 30%;
+    right: 0;
+    left: 22%;
     transition: opacity 0.5s ease-in-out;
     opacity: 1;
+
+    width: 351px;
+    height: 481px;
 }
 </style>

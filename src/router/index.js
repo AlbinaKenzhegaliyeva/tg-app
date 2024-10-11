@@ -9,9 +9,29 @@ const router = createRouter({
       component: () => import('../views/greetings.vue')
     },
     {
-      path: '/chat',
-      name: 'chat',
-      component: () => import('../views/chat.vue')
+      path: '/chat/obx',
+      name: 'obx',
+      component: () => import('../views/chat/obx.vue')
+    },
+    {
+      path: '/chat/sort',
+      name: 'sort',
+      component: () => import('../views/chat/sort.vue')
+    },
+    {
+      path: '/chat/routes',
+      name: 'routes',
+      component: () => import('../views/chat/routes.vue')
+    },
+    {
+      path: '/chat/quiz',
+      name: 'quiz',
+      component: () => import('../views/chat/quiz.vue')
+    },
+    {
+      path: '/door',
+      name: 'door',
+      component: () => import('../views/door.vue')
     },
   ]
 })
