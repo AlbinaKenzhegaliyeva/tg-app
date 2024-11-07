@@ -33,6 +33,26 @@ const router = createRouter({
       name: 'door',
       component: () => import('../views/door.vue')
     },
+    {
+      path: '/pre-final',
+      name: 'pre-final',
+      component: () => import('../views/pre-final.vue')
+    },
+    {
+      path: '/finals/',
+      name: 'final-overlay',
+      component: () => import('../views/finals/final-overlay.vue')
+    },
+    {
+      path: '/finals/final',
+      name: 'final',
+      component: () => import('../views/finals/final.vue')
+    },
+    {
+      path: '/finals/leaderboard',
+      name: 'leaderboard',
+      component: () => import('../views/finals/leaderboard.vue')
+    },
   ]
 })
 

@@ -3,6 +3,9 @@
         <TheHeaderChat />
         <div class="chat">
             <div class="chat__left">
+                <div class="chat__left-avatar avatar-1">
+                    <img src="@/assets/ava_g.svg" alt="avatar">
+                </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue :isLast="true">
                         <template #chattng__text>
@@ -13,12 +16,9 @@
                         </template>
                     </TheChatBlue>
                 </div>
-                <div class="chat__left-avatar left-avatar-1">
-                    <img src="@/assets/avatar_g.png" alt="avatar">
-                </div>
             </div>
 
-            <div class="chat__right show-right-1" v-if="showRight">
+            <div class="chat__right show-right-1" v-show="showRight">
                 <div class="chat__right-bubble right-text-1">
                     <TheChatWhite>
                         <template #chattng__text>
@@ -27,13 +27,13 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/avatar_b.png" alt="avatar">
+                    <img src="@/assets/ava_b.svg" alt="avatar">
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
-                <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.png" alt="avatar">
+            <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
+                <div class="chat__note-avatar">
+                    <img src="@/assets/ava_g.svg" alt="avatar">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
@@ -41,9 +41,12 @@
                 </div>
             </div>
 
-            <div class="chat__left" v-if="showLeftSecond">
+            <div class="chat__left" v-show="showLeftSecond">
+                <div class="chat__left-avatar" ref="avatar">
+                        <img src="@/assets/ava_g.svg" alt="avatar">
+                    </div>
                 <div class="chat__left-bubble left-text-2">
-                    <TheChatBlue :isLast="true && !finalMessageAdded" class="chat_width">
+                    <TheChatBlue :isLast="true && !finalMessageAdded">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <span>Нет, Коробчик, чтобы его превзойти! </span>
@@ -59,9 +62,6 @@
                         </template>
                     </TheChatBlue>
                 </div>
-                <div class="chat__left-avatar left-avatar-1">
-                    <img src="@/assets/avatar_g.png" alt="avatar">
-                </div>
             </div>
 
             <div class="tap" v-if="showTap">
@@ -69,7 +69,7 @@
             </div>
 
             <div class="chat__right show-right-2" v-if="showRightSecond">
-                <div class="chat__right-bubble right-text-2">
+                <div class="chat__right-bubble">
                     <TheChatWhite>
                         <template #chattng__text>
                             <span>Ого, как это?</span>
@@ -77,13 +77,13 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-2">
-                    <img src="@/assets/avatar_b.png" alt="avatar">
+                    <img src="@/assets/ava_b.svg" alt="avatar">
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-if="showNote2" @animationend="handleNoteAnimationEnd">
-                <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.png" alt="avatar">
+            <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
+                <div class="chat__note-avatar">
+                    <img src="@/assets/ava_g.svg" alt="avatar">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
@@ -91,7 +91,10 @@
                 </div>
             </div>
 
-            <div class="chat__left" v-if="showLeftThird">
+            <div class="chat__left" v-show="showLeftThird">
+                <div class="chat__left-avatar avatar-2">
+                    <img src="@/assets/ava_g.svg" alt="avatar">
+                </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]"
                         class="chat_width">
@@ -110,12 +113,9 @@
                         </template>
                     </TheChatBlue>
                 </div>
-                <div class="chat__left-avatar">
-                    <img src="@/assets/avatar_g.png" alt="avatar">
-                </div>
             </div>
 
-            <div>
+            <div ref="scrollAnchor">
                 <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
             </div>
         </div>
@@ -175,10 +175,20 @@ export default {
         }
     },
     methods: {
+        scrollToElement(refName) {
+            this.$nextTick(() => {
+                const targetElement = this.$refs[refName];
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
+            });
+        },
         handleNoteAnimationEnd() {
             this.showNote = false;
         },
         addNewChat() {
+            let el = this.$refs.avatar;
+            el.classList.add('avatar-padding');
             this.clickedTap = true;
             this.finalMessageAdded = true;
             this.showTap = false;
@@ -191,6 +201,7 @@ export default {
             setTimeout(() => {
                 this.showNote2 = false;
                 this.showLeftThird = true;
+                this.scrollToElement("scrollAnchor");
                 this.showButton = true;
             }, 10000);
         },
@@ -201,7 +212,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page {
     background-color: #02283E;
     min-height: 100vh;
@@ -213,14 +224,24 @@ export default {
 }
 
 .chat {
-    padding: 100px 7px 0;
+    padding: 90px 7px 0;
 
     &__left {
+        display: flex;
+        gap: 5px;
+        justify-content: start;
+        align-items: start;
+        margin: 13px 0 0 0;
+
+        &-avatar {
+            padding: 10px 0 0 0;
+        }
+
         &-bubble {
             display: flex;
             flex-direction: column;
             gap: 4px;
-            align-items: center;
+            align-items: start;
 
             &_inner {
                 display: flex;
@@ -234,7 +255,7 @@ export default {
                 span {
                     font-family: var(--gte);
                     font-weight: 400;
-                    font-size: 13px;
+                    font-size: 14px;
                     line-height: 120%;
                     color: #fff;
                     position: relative;
@@ -245,11 +266,16 @@ export default {
     }
 
     &__right {
+        display: flex;
+        gap: 5px;
+        justify-content: end;
+        align-items: end;
+        margin: 13px 0 0 0;
 
         span {
             font-family: var(--gte);
             font-weight: 400;
-            font-size: 13px;
+            font-size: 14px;
             line-height: 120%;
             color: #000;
             position: relative;
@@ -259,6 +285,7 @@ export default {
         &-bubble {
             display: flex;
             justify-content: center;
+            margin: 0 0 20px 0;
             // opacity: 0;
         }
 
@@ -390,6 +417,14 @@ export default {
     right: 23px;
     animation: heartbeat 1.5s infinite;
     cursor: pointer;
+
+    @media (max-width: 800px) {
+        bottom: 10px;
+    }
+
+    @media (max-width: 430px) {
+        bottom: 47px;
+    }
 }
 
 .show-right-1 {
@@ -404,8 +439,15 @@ export default {
     opacity: 0;
 }
 
-.right-text-2 {
-    justify-content: flex-end;
-    padding-right: 60px;
+.avatar-1 {
+    padding: 230px 0 0 0;
+}
+
+.avatar-2 {
+    padding: 350px 0 0 0;
+}
+
+.avatar-padding {
+    padding: 80px 0 0 0;
 }
 </style>

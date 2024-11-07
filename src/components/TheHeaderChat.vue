@@ -44,7 +44,7 @@ export default {
       span {
         font-family: var(--gte);
         font-weight: 400;
-        font-size: 12px;
+        font-size: 13px;
         line-height: 120%;
         color: #989ba0;
       }
@@ -57,7 +57,7 @@ export default {
         span {
           font-family: var(--gte);
           font-weight: 500;
-          font-size: 14px;
+          font-size: 15px;
           line-height: 120%;
           color: #fff;
         }

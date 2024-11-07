@@ -29,6 +29,6 @@
     background: #fff;
     background-attachment: fixed;
     border-bottom-left-radius: 15px;
-    transform: skew(0.04turn, 16deg);
+    transform: skew(0.04turn, 17deg);
 }
 </style>
