@@ -40,7 +40,7 @@
         <template #title></template>
         <template #body>
             <div class="menu">
-                <div>
+                <div @click="openChat">
                     <img src="@/assets/reload.svg" alt="reload">
                     <span>Сыграть ещё раз</span>
                 </div>
@@ -48,7 +48,7 @@
                     <img src="@/assets/coin.svg" alt="coin">
                     <span>Открыть таблицу лидеров</span>
                 </div>
-                <div>
+                <div @click="openTelegram">
                     <img src="@/assets/tg.svg" alt="tg">
                     <span>Перейти в телеграм-канал Ozon Tech</span>
                 </div>
@@ -104,6 +104,13 @@ export default {
             this.showMenu = false;
             this.$router.push('/finals/final');
             document.body.style.overflow = '';
+        },
+        openChat() {
+            this.$router.push('/chat/obx');
+            document.body.style.overflow = '';
+        },
+        openTelegram() {
+            window.location.href = 'https://t.me/s/ozon_tech';
         }
     }
 }
@@ -132,7 +139,6 @@ export default {
 
     .header {
         z-index: 1;
-
 
         &__menu {
             z-index: 10;
@@ -182,6 +188,11 @@ export default {
     @media (max-width: 800px) {
         left: 300px;
         width: 238px;
+    }
+
+    @media (max-width: 600px) {
+        left: 130px;
+        width: 254px;
     }
 
     @media (max-width: 430px) {
@@ -287,6 +298,7 @@ export default {
         display: flex;
         gap: 13px;
         align-items: center;
+        cursor: pointer;
 
         span {
             font-family: var(--gte);

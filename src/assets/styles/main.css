@@ -11,8 +11,12 @@
 
 body {
     margin: 0;
+    overflow: hidden;
+    touch-action: pan-x pan-y;
+    overscroll-behavior: none;
 }
 
 html {
     scroll-behavior: smooth;
+    touch-action: manipulation;
 }

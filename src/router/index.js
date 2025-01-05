@@ -5,8 +5,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'greetings',
-      component: () => import('../views/greetings.vue')
+      name: 'index',
+      component: () => import('../views/start/index.vue')
+    },
+    {
+      path: '/start/last-screen',
+      name: 'last-screen',
+      component: () => import('../views/start/last-screen.vue')
     },
     {
       path: '/chat/obx',
@@ -32,6 +37,11 @@ const router = createRouter({
       path: '/door',
       name: 'door',
       component: () => import('../views/door.vue')
+    },
+    {
+      path: '/ozon-form',
+      name: 'ozon-form',
+      component: () => import('../views/ozon-form.vue')
     },
     {
       path: '/pre-final',

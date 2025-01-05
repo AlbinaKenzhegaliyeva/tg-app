@@ -17,7 +17,7 @@ export default {
     methods: {
         closeMenu() {
             this.$emit('close');
-            document.body.style.overflow = '';
+            document.body.style.overflow = 'auto';
         },
         startSwipe(event) {
             this.startY = event.touches[0].clientY;
@@ -49,12 +49,25 @@ export default {
         border-radius: 20px 20px 0px 0px;
         background: #0a3956;
         padding: 0 20px 49px 21px;
+        animation: slide-up 0.3s ease-out;
 
         .popup__header {
             display: flex;
             justify-content: center;
             padding: 10px 0 34px 0;
         }
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(100%);
+    }
+    80% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
     }
 }
 </style>

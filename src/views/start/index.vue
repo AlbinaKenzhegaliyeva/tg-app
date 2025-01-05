@@ -1,5 +1,5 @@
 <template>
-<TheLoader v-if="isLoading" />
+    <TheLoader v-if="isLoading" />
     <div class="greetings">
         <img src="@/assets/back.png" alt="back" class="greetings__background">
         <img src="@/assets/hello.png" alt="goose" class="greetings__gosha_begin first-goose">
@@ -15,27 +15,30 @@
         </div>
         <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
             @click="moveGoose" ref="btn">Привет!</button>
-        <img src="@/assets/smirkk.png" alt="goose" class="goose-smirk" v-show="smirk">
-        <img src="@/assets/Corobchik.svg" alt="box" class="greetings__corobchik" v-show="corobchik">
+        <!-- <img src="@/assets/smirkk.png" alt="goose" class="greetings__goose-smirk" v-show="smirk"> -->
+        <img src="@/assets/smirk_new.png" alt="goose" class="greetings__goose-smirk" v-show="smirk">
+        <!-- <img src="@/assets/Corobchik.svg" alt="box" class="greetings__corobchik" v-show="corobchik"> -->
+        <img src="@/assets/Corobchik_neww.png" alt="box" class="greetings__corobchik" v-show="corobchik">
         <div class="greetings__about-korobchik" v-if="corobchikVisible">
             <img src="@/assets/text.svg" alt="dialog" class="greetings__about-korobchik-bubble">
             <div class="greetings__about-korobchik-text">
                 <span>А это Коробчик — подарок на день рождения и один из 6 100 000 ежедневных заказов на
                     Ozon.</span>
-                <span>Над оперативностью доставки работают 6 000+ ИТ-специалистов в сложной системе с 6 100
+                <span>Над оперативностью доставки работают 6 000+ ИТ-специалистов в сложной системе с <br> 6 100
                     микросервисами.</span>
             </div>
         </div>
         <button class="greetings__btn-korobchik" v-if="corobchikVisible" @mousedown="sayHello" @mouseup="resetStyle"
             @click="goToForm" ref="btn">Ого, сколько всего</button>
-        <img src="@/assets/open_eyes.png" alt="goose" class="third-goose" v-show="goose">
+        <img src="@/assets/open_eyes.png" alt="goose" class="third-goose" v-show="goose" ref="lastGoose">
 
-        <img src="@/assets/corob-hand.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand">
+        <!-- <img src="@/assets/corob-hand.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand"> -->
+        <img src="@/assets/сorobchik-hand_new.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand">
         <div class="greetings__gosha-corobchik" v-show="corobchik_hand">
             <span>С Гошей и Коробчиком познакомились, твоя очередь представиться.</span>
         </div>
         <div class="greetings__form-btn" v-show="corobchik_hand">
-            <button  @click="goToNextScreen">Заполнить данные</button>
+            <button @click="openForm">Заполнить данные</button>
             <div @click="openFormInfo">
                 <img src="@/assets/in.svg" alt="info">
             </div>
@@ -43,7 +46,8 @@
         <div class="greetings__form-bubble" v-show="clickInfo">
             <img src="@/assets/final-bubble.png" alt="dialog">
             <span>
-                Мы собираем данные для формирования лидерборда и отправки подарков победителям, другие пользователи увидят только твой ник
+                Мы собираем данные для формирования лидерборда и отправки подарков победителям, другие пользователи
+                увидят только твой ник
             </span>
         </div>
 
@@ -58,12 +62,12 @@
 
 <script>
 import TheLoader from '@/components/TheLoader.vue';
+import axios from 'axios';
 
 export default {
     components: {
         TheLoader
     },
-    name: 'Greetings',
     data() {
         return {
             isLoading: true,
@@ -78,6 +82,21 @@ export default {
         }
     },
     methods: {
+        expandTelegramWebApp() {
+            if (window.Telegram?.WebApp) {
+                const webApp = window.Telegram.WebApp;
+                webApp.expand(); // Разворачивает WebApp на весь экран
+                console.log("WebApp развернут.");
+            } else {
+                console.error("Telegram WebApp API недоступен.");
+            }
+        },
+        setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            const expires = `expires=${date.toUTCString()}`;
+            document.cookie = `${name}=${value};${expires};path=/;SameSite=None;Secure`;
+        },
         sayHello() {
             let el = this.$refs.btn;
             el.style.boxShadow = 'none';
@@ -113,25 +132,114 @@ export default {
         openFormInfo() {
             this.clickInfo = !this.clickInfo;
         },
+        openForm() {
+            this.$router.push('/ozon-form');
+        },
         goToNextScreen() {  //change!!!!
             this.orderVisible = true;
             this.corobchik = true;
             this.goose = true;
             this.corobchik_hand = false;
+            this.clickInfo = false;
+
+            let goose = this.$refs.lastGoose;
+            goose.classList.add('last-goose');
         },
         goTo() {
             this.$router.push('/chat/obx');
         },
+        async fetchCsrfToken() {
+            try {
+                const response = await fetch('https://api.ozontechhrbot.ru/sanctum/csrf-cookie', {
+                    method: 'GET',
+                    credentials: 'include', // Включает отправку и получение cookies
+                    headers: {
+                        'Accept': 'application/json', // Указываем, что ожидаем JSON-ответ
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка получения CSRF-cookie: ${response.status} ${response.statusText}`);
+                }
+
+                console.log('CSRF-cookie успешно установлены.');
+                // Если куки успешно установлены, они будут доступны для последующих запросов.
+            } catch (error) {
+                console.error('Ошибка при запросе CSRF-cookie:', error.message);
+            }
+        },
+        getCookie(name) {
+            const matches = document.cookie.match(new RegExp(
+                `(?:^|; )${name.replace(/([$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`
+            ));
+            return matches ? decodeURIComponent(matches[1]) : null;
+        },
+        getFormResult() {
+            const uuid = this.getCookie("uuid");
+
+            if (!uuid) {
+                console.error("Куки с именем 'uuid' не найдены.");
+                return;
+            }
+
+            let url = 'https://api.ozontechhrbot.ru/api/form/get';
+
+            axios
+                .get(url, {
+                    params: {
+                        "code": uuid,
+                    },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                })
+                .then(res => {
+                    console.log(res.data);
+                    if (res.data.result === true) {
+                        this.$router.push('/finals/final');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
     },
     mounted() {
+        this.expandTelegramWebApp();
+        const webApp = window.Telegram?.WebApp;
+        const urlParams = new URLSearchParams(window.location.search);
+        const uuid = urlParams.get('query');
+        // console.log(getCookie('uuid'));
+        if (uuid) {
+            console.log('Полученный UUID:', uuid);
+            this.setCookie('uuid', uuid, 7); // Сохраняем UUID на 7 дней
+        } else {
+            console.error('UUID отсутствует в параметре query.');
+        }
+        if (webApp) {
+            // Проверяем, доступен ли user
+            const user = webApp.initDataUnsafe?.user;
+
+            if (user && user.id) {
+                console.log('User ID:', user.id); // Логируем user_id
+                this.setCookie('user_id', user.id, 7);
+            } else {
+                console.error('User ID недоступен.');
+            }
+        } else {
+            console.error('Telegram WebApp API не доступен.');
+        }
+        this.fetchCsrfToken();
+        this.getFormResult();
         setTimeout(() => {
             this.isLoading = false;
-        }, 1000);
+        }, 2000);
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .greetings {
     position: relative;
     overflow: hidden;
@@ -156,9 +264,22 @@ export default {
             width: -webkit-fill-available;
         }
 
-        @media (max-width: 430px) {
-            top: 22%;
+        @media (max-width: 600px) {
+            top: calc(50% - 290px);
             width: 100%;
+        }
+
+        @media (max-width: 430px) {
+            top: 23%;
+            width: 100%;
+        }
+
+        @media (max-width: 425px) {
+            top: 18%;
+        }
+
+        @media (max-width: 420px) {
+            top: 23%;
         }
 
         @media (max-width: 375px) {
@@ -181,14 +302,28 @@ export default {
             width: -webkit-fill-available;
         }
 
+        @media (max-width: 600px) {
+            top: calc(50% - 270px);
+            width: 100%;
+        }
+
         @media (max-width: 430px) {
-            transform: translateX(-47.5%) scale(1.32);
+            transform: translateX(-47.5%) scale(1.34);
             top: 26%;
             width: 100%;
         }
 
+        @media (max-width: 425px) {
+            top: 20%;
+        }
+
+        @media (max-width: 420px) {
+            top: 26%;
+        }
+
         @media (max-width: 390px) {
             transform: translateX(-47.5%) scale(1.32);
+            top: 26%;
         }
 
         @media (max-width: 375px) {
@@ -202,28 +337,40 @@ export default {
         animation: fadeIn 0.8s forwards;
         animation-delay: 6s;
 
+        position: absolute;
+        top: 40px;
+
+        @media (max-width: 800px) {
+            top: 0;
+            left: 200px;
+        }
+
+        @media (max-width: 600px) {
+            top: 0;
+            left: auto;
+        }
+
+        @media (max-width: 430px) {
+            top: 40px;
+        }
+
+        @media (max-width: 425px) {
+            top: 0;
+        }
+
+        @media (max-width: 420px) {
+            top: 40px;
+        }
+
         &-bubble {
-            position: absolute;
-            top: calc(35% - 170px);
-            right: 0;
-            left: 0;
-            width: auto;
             max-width: 100%;
-            padding: 5px;
 
             @media (max-width: 800px) {
                 width: 450px;
-                top: 0;
-                left: 180px;
-                padding: 0;
             }
 
-            @media (max-width: 430px) {
-                top: calc(30% - 170px);
-                right: 0;
-                left: 0;
+            @media (max-width: 600px) {
                 width: auto;
-                padding: 5px;
             }
         }
 
@@ -239,18 +386,30 @@ export default {
 
             @media (max-width: 800px) {
                 top: 30px;
-                left: 220px;
-                right: 170px;
+            }
+
+            @media (max-width: 600px) {
+                left: 30px;
+                right: 30px;
             }
 
             @media (max-width: 430px) {
-                top: calc(30% - 140px);
+                top: 20px;
                 left: 35px;
                 right: 35px;
             }
 
+            @media (max-width: 420px) {
+                top: 25px;
+            }
+
+            @media (max-width: 390px) {
+                top: 20px;
+            }
+
             @media (max-width: 375px) {
-                top: calc(35% - 180px);
+                // top: calc(35% - 180px);
+                top: 30px;
                 left: 30px;
                 right: 20px;
             }
@@ -272,6 +431,10 @@ export default {
 
         @media (max-width: 430px) {
             bottom: 142px;
+        }
+
+        @media (max-width: 425px) {
+            bottom: 85px;
         }
 
         @media (max-width: 420px) {
@@ -330,6 +493,10 @@ export default {
             bottom: 70px;
         }
 
+        @media (max-width: 425px) {
+            bottom: 30px;
+        }
+
         @media (max-width: 420px) {
             bottom: 60px;
         }
@@ -344,25 +511,35 @@ export default {
         left: 0;
         top: 55%;
         opacity: 0;
-        animation: fadeIn 0.5s forwards;
+        animation: fadeIn 1s forwards; //here
         animation-delay: 0s;
+        width: 219px;
 
         @media (max-width: 800px) {
             top: 55%;
             left: 25%;
         }
 
+        @media (max-width: 600px) {
+            left: -4%;
+            top: 50%;
+        }
+
         @media (max-width: 430px) {
             top: 50%;
-            left: 0;
         }
 
         @media (max-width: 420px) {
-            top: 48%;
+            top: 49%;
         }
 
         @media (max-width: 390px) {
             top: 51%;
+            left: -10px;
+        }
+
+        @media (max-width: 375px) {
+            left: -15px;
         }
     }
 
@@ -371,49 +548,45 @@ export default {
         animation: fadeIn 1s forwards;
         animation-delay: 1s;
 
-        &-bubble {
-            position: absolute;
-            top: calc(25% - 160px);
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            padding: 0;
-            width: 100%;
+        position: absolute;
+        top: 20px;
+        right: -10px;
 
-            @media (max-width: 800px) {
-                width: auto;
-                left: 260px;
-                margin: 0;
-                top: 15px;
-            }
+        @media (max-width: 800px) {
+            right: 150px;
+            top: 0;
+        }
 
-            @media (max-width: 430px) {
-                width: 100%;
-                left: 0;
-                margin: 0 auto;
-                top: calc(25% - 160px);
-            }
+        @media (max-width: 600px) {
+            top: 30px;
+            right: -10px;
+        }
+
+        @media (max-width: 425px) {
+            top: 0;
+        }
+
+        @media (max-width: 420px) {
+            top: 20px;
+        }
+
+        @media (max-width: 375px) {
+            top: 0;
         }
 
         &-text {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 3px;
             position: absolute;
-            top: calc(25% - 140px);
+            top: 0;
             left: 0;
             right: 0;
 
             @media (max-width: 800px) {
-                left: 260px;
-                top: 35px;
-                right: 150px;
-            }
-
-            @media (max-width: 430px) {
-                top: calc(25% - 140px);
-                left: 0;
-                right: 0;
+                top: 20px;
+                left: 20px;
+                right: 20px;
             }
 
             span {
@@ -421,10 +594,6 @@ export default {
                 font-weight: 400;
                 font-size: 15px;
                 color: #073049;
-                left: auto;
-                right: auto;
-                top: auto;
-                padding: 0 20px;
             }
         }
     }
@@ -452,6 +621,10 @@ export default {
 
         @media (max-width: 430px) {
             bottom: 50px;
+        }
+
+        @media (max-width: 425px) {
+            bottom: 30px;
         }
 
         @media (max-width: 420px) {
@@ -526,7 +699,8 @@ export default {
 
             @media (max-width: 390px) {
                 top: 110px;
-                left: 100px;
+                left: 90px;
+                right: 20px;
             }
 
             @media (max-width: 375px) {
@@ -575,21 +749,28 @@ export default {
         left: 0;
         top: 55%;
         opacity: 0;
-        animation: fadeIn 0.5s forwards;
+        // animation: fadeIn 0.5s forwards;
+        animation: fadeIn 0.5s ease-in-out forwards;
         animation-delay: 0s;
+        width: 219px;
 
         @media (max-width: 800px) {
             top: 55%;
             left: 25%;
         }
 
+        @media (max-width: 600px) {
+            left: 0;
+            top: 50%;
+        }
+
         @media (max-width: 430px) {
             top: 50%;
-            left: 0;
+            left: -4%;
         }
 
         @media (max-width: 420px) {
-            top: 48%;
+            top: 49%;
         }
 
         @media (max-width: 390px) {
@@ -626,6 +807,14 @@ export default {
         right: 13px;
         left: 13px;
 
+        @media (max-width: 420px) {
+            bottom: 50px;
+        }
+
+        @media (max-width: 390px) {
+            bottom: 30px;
+        }
+
         button {
             border-radius: 5px;
             border: none;
@@ -651,23 +840,121 @@ export default {
     }
 
     &__form-bubble {
-        position: relative;
+        position: absolute;
+        bottom: 70px;
+        right: 0;
 
-        img {
-            position: absolute;
+        @media (max-width: 420px) {
+            bottom: 80px;
+        }
+
+        @media (max-width: 390px) {
             bottom: 70px;
-            right: 0;
         }
 
         span {
             position: absolute;
-            bottom: 105px;
+            top: 20px;
             left: 80px;
             right: 20px;
             font-family: var(--gte);
             font-weight: 400;
             font-size: 14px;
             color: #073049;
+
+            @media (max-width: 800px) {
+                left: 20px;
+            }
+        }
+    }
+
+    &__goose-smirk {
+        position: absolute;
+        top: 55%;
+        right: 0;
+        left: 22%;
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+        animation-delay: 0s;
+        width: 334px;
+
+        @media (max-width: 800px) {
+            left: 46%;
+            // top: 21%;
+            top: calc(40% - 180px);
+        }
+
+        @media (max-width: 600px) {
+            top: calc(42% - 200px);
+            left: auto;
+            right: -80px;
+        }
+
+        @media (max-width: 430px) {
+            left: 37%;
+            top: calc(42% - 200px);
+            right: 0;
+        }
+
+        @media (max-width: 425px) {
+            top: calc(40% - 200px);
+        }
+
+        @media (max-width: 420px) {
+            left: 35%;
+            top: calc(42% - 210px);
+            // top: 25%;
+        }
+
+        @media (max-width: 390px) {
+            top: calc(43% - 210px);
+        }
+
+        @media (max-width: 375px) {
+            left: 38%;
+            top: calc(50% - 210px);
+            width: 300px;
+        }
+    }
+
+    .last-goose {
+        opacity: 0;
+        animation: fadeOut 0.2s forwards, fadeIn 0.1s forwards;
+    }
+
+    @keyframes zoomIn {
+        0% {
+            transform: translateX(-50%) scale(1);
+        }
+
+        50% {
+            transform: translateX(-50%) scale(1);
+        }
+
+        100% {
+            transform: translateX(-50%) scale(1.2);
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInNew {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
         }
     }
 }
@@ -686,124 +973,77 @@ export default {
 }
 
 .third-goose {
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.5s ease-in-out;
     position: absolute;
     left: 22%;
     top: 27%;
-    width: 336px;
+    width: 360px;
+    animation: fadeIn 0.5s forwards; //here
 
     @media (max-width: 800px) {
-        top: 14%;
+        top: calc(40% - 180px);
         left: 46%;
-        width: 350px;
+    }
+
+    @media (max-width: 600px) {
+        top: calc(50% - 260px);
+        left: auto;
+        right: -80px;
     }
 
     @media (max-width: 430px) {
-        top: 22%;
-        left: 36%;
-        width: 336px;
+        top: calc(42% - 200px);
+        left: 35%;
+    }
+
+    @media (max-width: 425px) {
+        top: calc(40% - 200px);
     }
 
     @media (max-width: 420px) {
-        top: 19%;
-        left: 35%;
+        top: calc(42% - 210px);
     }
 
     @media (max-width: 390px) {
-        top: 19%;
-        left: 35%;
+        top: calc(43% - 210px);
+        left: 32%;
     }
 
     @media (max-width: 375px) {
         top: 17%;
         left: 36%;
+        width: 330px;
     }
 }
 
 .diagonal-move {
     transform: translate(-22.5%, -27%) scale(0.9);
-    opacity: 0;
+    opacity: 1;
     animation-duration: 1s;
-    // transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out;
 
     @media (max-width: 800px) {
         transform: translate(-14%, -18%) scale(0.9);
     }
 
+    @media (max-width: 600px) {
+        transform: translate(-19%, -10%) scale(0.8);
+    }
+
     @media (max-width: 430px) {
-        transform: translate(-23%, -17%) scale(0.8);
+        transform: translate(-24%, -18%) scale(0.8);
     }
 
     @media (max-width: 420px) {
-        transform: translate(-23%, -17%) scale(0.8);
+        transform: translate(-24%, -18%) scale(0.83);
     }
 
     @media (max-width: 390px) {
-        transform: translate(-22.5%, -17%) scale(0.9);
+        transform: translate(-22%, -18%) scale(0.86);
     }
 
     @media (max-width: 375px) {
-        transform: translate(-21%, -13%) scale(0.9);
-    }
-}
-
-.goose-smirk {
-    position: absolute;
-    top: 25%;
-    right: 0;
-    left: 22%;
-    opacity: 0;
-    // width: 351px;
-    // height: 481px;
-    animation: fadeIn 0s forwards;
-
-    @media (max-width: 800px) {
-        left: 46%;
-        top: 21%;
-        width: 350px;
-    }
-
-    @media (max-width: 430px) {
-        left: 37%;
-        top: 27%;
-        width: auto;
-    }
-
-    @media (max-width: 420px) {
-        left: 35%;
-        top: 25%;
-    }
-
-    @media (max-width: 375px) {
-        left: 35%;
-        top: 23%;
-    }
-}
-
-@keyframes zoomIn {
-    0% {
-        transform: translateX(-50%) scale(1);
-    }
-
-    50% {
-        transform: translateX(-50%) scale(1);
-    }
-
-    100% {
-        transform: translateX(-50%) scale(1.26);
-    }
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
+        transform: translate(-22%, -12%) scale(0.85);
     }
 }
 </style>

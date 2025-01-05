@@ -6,13 +6,17 @@
 
             <div class="gosha__dialog" v-show="showDialog">
                 <img src="@/assets/soz.svg" alt="dialog">
-                <span>Ты круто показал себя — справился с высокими нагрузками и доставил Коробчика.
-                    <br>Если хочешь работать над решениями, которыми пользуются миллионы, смотри вакансии на нашем
-                    сайте.</span>
+                <div>
+                    <span>Ты круто показал себя — справился <br> с высокими нагрузками и доставил <br> Коробчика.</span>
+                    <span>
+                        Если хочешь работать над решениями, которыми пользуются миллионы, смотри вакансии на нашем
+                        сайте.
+                    </span>
+                </div>
             </div>
 
             <div class="gosha__buttons">
-                <div class="gosha__buttons_blue">
+                <div class="gosha__buttons_blue" @click="openVacancies">
                     <span>Вакансии в Ozon Tech</span>
                     <img src="@/assets/op.svg" alt="go">
                 </div>
@@ -42,7 +46,90 @@ export default {
     methods: {
         goToFinal() {
             this.$router.push('/finals/');
-        }
+        },
+        getCookie(name) {
+            const matches = document.cookie.match(new RegExp(
+                `(?:^|; )${name.replace(/([$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`
+            ));
+            return matches ? decodeURIComponent(matches[1]) : null;
+        },
+        async fetchCsrfToken() {
+            try {
+                const response = await fetch('https://api.ozontechhrbot.ru/sanctum/csrf-cookie', {
+                    method: 'GET',
+                    credentials: 'include', // Включает отправку и получение cookies
+                    headers: {
+                        'Accept': 'application/json', // Указываем, что ожидаем JSON-ответ
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка получения CSRF-cookie: ${response.status} ${response.statusText}`);
+                }
+
+                console.log('CSRF-cookie успешно установлены.');
+                // Если куки успешно установлены, они будут доступны для последующих запросов.
+            } catch (error) {
+                console.error('Ошибка при запросе CSRF-cookie:', error.message);
+            }
+        },
+        async openVacancies() {
+            // window.location.href = 'https://ozon.tech/gamebot-job';
+
+            try {
+                // Получаем CSRF-токен и user_id из cookies
+                await this.fetchCsrfToken(); // Дожидаемся завершения получения CSRF-токена
+                const csrfToken = this.getCookie('XSRF-TOKEN');
+                const user_id = this.getCookie('user_id');
+
+                if (!csrfToken) {
+                    console.error('CSRF-токен не найден в куках.');
+                    return;
+                }
+                if (!user_id) {
+                    console.error('user_id не найден в куках.');
+                    return;
+                }
+
+                // Формируем URL для запроса
+                const url = new URL(`https://ozon.tech/gamebot-job`);
+                url.searchParams.append('utm_source', 'tg');
+                url.searchParams.append('utm_medium', 'gamebot');
+                url.searchParams.append('utm_campaign', user_id);
+
+                // Устанавливаем заголовки
+                const headers = {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-XSRF-TOKEN": csrfToken,
+                    "Sec-Fetch-Dest": "empty",
+                    "Sec-Fetch-Mode": "cors",
+                    "Sec-Fetch-Site": "same-origin", // Используется, если фронтенд и API на одном домене
+                };
+
+                // Выполняем POST-запрос
+                const response = await fetch(url.toString(), {
+                    method: "POST",
+                    headers,
+                    credentials: "include", // Включаем cookies в запрос
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    throw new Error(`Ошибка запроса: ${response.status} ${response.statusText}`);
+                }
+
+                // Обрабатываем успешный ответ
+                const data = await response.json();
+                console.log('Данные успешно отправлены:', data);
+
+                // Переход на другую страницу
+                window.location.href = url;
+            } catch (error) {
+                // Логируем ошибку
+                console.error('Ошибка при отправке данных:', error);
+            }
+        },
     },
     mounted() {
         setTimeout(() => {
@@ -51,7 +138,7 @@ export default {
         setTimeout(() => {
             this.showDialog = true;
         }, 3000);
-    }
+    },
 }
 </script>
 
@@ -93,14 +180,23 @@ export default {
             left: 90px;
         }
 
+        @media (max-width: 600px) {
+            top: 180px;
+            left: 20px;
+        }
+
         @media (max-width: 430px) {
             top: 130px;
             left: 20px;
         }
 
+        @media (max-width: 425px) {
+            top: 10px;
+        }
+
         @media (max-width: 420px) {
             top: 120px;
-            left: 20px;
+            left: 0;
         }
 
         @media (max-width: 390px) {
@@ -113,15 +209,39 @@ export default {
             left: 0;
         }
 
-        span {
-            font-family: var(--gte);
-            font-weight: 400;
-            font-size: 16px;
-            color: #073049;
+        img {
+            @media (max-width: 420px) {
+                width: 420px;
+            }
+
+            @media (max-width: 390px) {
+                width: auto;
+            }
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
             position: absolute;
-            top: 25px;
-            left: 20px;
+            top: 15px;
+            left: 25px;
             right: 15px;
+
+            @media (max-width: 420px) {
+                top: 15px;
+            }
+
+            @media (max-width: 390px) {
+                top: 15px;
+            }
+
+            span {
+                font-family: var(--gte);
+                font-weight: 400;
+                font-size: 16px;
+                color: #073049;
+            }
         }
     }
 

@@ -1,7 +1,8 @@
 <template>
     <TheLoader v-if="isLoading" />
     <div class="page">
-        <div class="door">
+        <img src="@/assets/door_back.png" alt="background" class="background" v-show="showBackground">
+        <div class="door" ref="door">
             <img src="@/assets/door.png" alt="door" class="door-back" v-show="showDoor">
             <img src="@/assets/open_eyes.png" alt="together" class="door-gosha" v-show="showCharacters">
             <img src="@/assets/Corobchik.png" alt="box" class="door-corobchik" v-show="showCharacters">
@@ -10,7 +11,7 @@
                 <span>О, мы как раз вовремя!</span>
             </div>
             <img src="@/assets/flag.png" alt="flag" v-show="showFlag" class="flag">
-            <img src="@/assets/all.png" alt="together" v-show="showFinalCharacters" class="final-characters">
+            <img src="@/assets/all_new.png" alt="together" v-show="showFinalCharacters" class="final-characters">
             <div class="lizard__dialog" v-show="showMsg2">
                 <img src="@/assets/place.png" alt="text" class="lizard__dialog-bubble">
                 <span>Ура, спасибо за подарки!</span>
@@ -46,25 +47,30 @@ export default {
             showMsg2: false,
             showPoints: false,
             showBtn: false,
+            showBackground: false,
         }
     },
     mounted() {
         setTimeout(() => {
-            this.isLoading = false;
             this.showDoor = true;
-        }, 2000);
+            this.showBackground = true;
+        }, 0);
+
         setTimeout(() => {
             this.showCharacters = true;
-        }, 3000);
+            this.isLoading = false;
+        }, 2000);
+
         setTimeout(() => {
             this.showMsg = true;
         }, 5000);
+
         setTimeout(() => {
             this.showMsg = false;
             this.showCharacters = false;
             this.showDoor = false;
             this.showFlag = true;
-        }, 10000);
+        }, 9000);
         setTimeout(() => {
             this.showFinalCharacters = true;
         }, 11000);
@@ -92,11 +98,21 @@ export default {
     overflow: hidden;
 }
 
+.background {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 .door {
     width: 100%;
     height: 100vh;
-    background: url(@/assets/door_back.png) no-repeat center fixed;
+    // background: url(@/assets/door_back.png) no-repeat center fixed;
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 
     &-back {
         position: absolute;
@@ -110,10 +126,24 @@ export default {
             left: 30%;
         }
 
+        @media (max-width: 600px) {
+            left: 0;
+            height: auto;
+            width: 100%;
+        }
+
         @media (max-width: 430px) {
             left: 0;
             height: auto;
             width: 100%;
+        }
+
+        @media (max-width: 425px) {
+            bottom: auto;
+        }
+
+        @media (max-width: 420px) {
+            bottom: 0;
         }
     }
 
@@ -123,10 +153,17 @@ export default {
         left: -100px;
         z-index: 100;
         width: 100%;
+        animation: fadeIn 1s forwards;
+        opacity: 0;
 
         @media (max-width: 800px) {
             width: 350px;
             left: 20%;
+        }
+
+        @media (max-width: 600px) {
+            width: 100%;
+            left: -100px;
         }
 
         @media (max-width: 430px) {
@@ -141,15 +178,24 @@ export default {
         right: -30px;
         z-index: 100;
         width: 262px;
+        animation: fadeIn 1s forwards;
+        opacity: 0;
 
         @media (max-width: 800px) {
             width: 250px;
             left: 48%;
         }
 
+        @media (max-width: 600px) {
+            width: 280px;
+            left: auto;
+            right: -20px;
+        }
+
         @media (max-width: 430px) {
             width: 262px;
             left: 40%;
+            right: -30px;
         }
     }
 
@@ -168,9 +214,18 @@ export default {
                 left: 300px;
             }
 
+            @media (max-width: 600px) {
+                top: 220px;
+                left: 130px;
+            }
+
             @media (max-width: 430px) {
                 top: 240px;
                 left: 90px;
+            }
+
+            @media (max-width: 425px) {
+                top: 100px;
             }
 
             @media (max-width: 420px) {
@@ -202,9 +257,18 @@ export default {
                 left: 320px;
             }
 
+            @media (max-width: 600px) {
+                top: 240px;
+                left: 150px;
+            }
+
             @media (max-width: 430px) {
                 top: 260px;
                 left: 115px;
+            }
+
+            @media (max-width: 425px) {
+                top: 120px;
             }
 
             @media (max-width: 420px) {
@@ -233,6 +297,14 @@ export default {
             @media (max-width: 430px) {
                 height: auto;
             }
+
+            @media (max-width: 425px) {
+                height: 427px;
+            }
+
+            @media (max-width: 420px) {
+                height: auto;
+            }
         }
     }
 
@@ -252,10 +324,20 @@ export default {
                 top: 230px;
             }
 
+            @media (max-width: 600px) {
+                width: 575px;
+                left: -60px;
+                top: 420px;
+            }
+
             @media (max-width: 430px) {
                 width: 575px;
                 left: -100px;
                 top: 400px;
+            }
+
+            @media (max-width: 425px) {
+                top: 215px;
             }
 
             @media (max-width: 420px) {
@@ -284,9 +366,18 @@ export default {
                 left: 210px;
             }
 
+            @media (max-width: 600px) {
+                top: 50px;
+                left: 30px;
+            }
+
             @media (max-width: 430px) {
                 top: -20px;
                 left: 0;
+            }
+
+            @media (max-width: 425px) {
+                top: -160px;
             }
 
             @media (max-width: 420px) {
@@ -318,9 +409,18 @@ export default {
                 left: 220px;
             }
 
+            @media (max-width: 600px) {
+                top: 70px;
+                left: 45px;
+            }
+
             @media (max-width: 430px) {
                 top: 0;
                 left: 15px;
+            }
+
+            @media (max-width: 425px) {
+                top: -140px;
             }
 
             @media (max-width: 420px) {
@@ -354,9 +454,21 @@ export default {
             left: 200px;
         }
 
-        @media (max-width: 430px) {
+        @media (max-width: 600px) {
             animation: slideDown 0.8s forwards;
+            left: 50px;
+        }
+
+        @media (max-width: 430px) {
             left: 0;
+        }
+
+        @media (max-width: 425px) {
+            animation: slideDownDesktop 0.8s forwards;
+        }
+
+        @media (max-width: 420px) {
+            animation: slideDown 0.8s forwards;
         }
 
         p {
@@ -444,6 +556,24 @@ export default {
 
     100% {
         top: 120px;
+        opacity: 1;
+    }
+}
+
+@keyframes slideDownDesktop {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 120px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
         opacity: 1;
     }
 }

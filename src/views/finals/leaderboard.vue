@@ -25,166 +25,69 @@
             <div class="leader">
                 <img src="@/assets/2.svg" alt="2">
                 <div>
-                    <p>@username</p>
-                    <span>1247</span>
+                    <p>{{ second_leader }}</p>
+                    <span>{{ second_leader_points }}</span>
                 </div>
             </div>
             <div class="leader first-place">
                 <img src="@/assets/1.svg" alt="1">
                 <div>
-                    <p>@username</p>
-                    <span>1322</span>
+                    <p>{{ first_leader }}</p>
+                    <span>{{ first_leader_points }}</span>
                 </div>
             </div>
             <div class="leader">
                 <img src="@/assets/3.svg" alt="3">
                 <div>
-                    <p>@username</p>
-                    <span>1199</span>
+                    <p>{{ third_leader }}</p>
+                    <span>{{ third_leader_points }}</span>
                 </div>
             </div>
         </div>
 
         <div class="leaders-list">
-            <div class="leaders-list__item">
+            <div class="leaders-list__item" v-for="(leader, index) in leaders.slice(3)" :key="index + 3">
                 <div class="leaders-list__item-inner">
                     <div>
-                        <p>4</p>
+                        <p>{{ index + 4 }}</p>
                         <img src="@/assets/4.svg" alt="avatar">
                     </div>
-                    <span>@username</span>
+                    <span>{{ leader.username }}</span>
                 </div>
-                <span>1122</span>
+                <span>{{ leader.totalPoints }}</span>
             </div>
+
             <!-- <div class="leaders-list__item">
                 <div class="leaders-list__item-inner">
                     <div>
-                        <p>5</p>
-                        <img src="@/assets/5.svg" alt="avatar">
+                        <p>19</p>
+                        <img src="@/assets/4.svg" alt="avatar">
                     </div>
-                    <span>@username</span>
+                    <span>ываыва</span>
                 </div>
-                <span>1122</span>
+                <span>999</span>
             </div> -->
-            <div class="leaders-list__item">
+            <!-- <div class="leaders-list__item">
                 <div class="leaders-list__item-inner">
                     <div>
-                        <p>6</p>
-                        <img src="@/assets/6.svg" alt="avatar">
+                        <p>20</p>
+                        <img src="@/assets/4.svg" alt="avatar">
                     </div>
-                    <span>@username</span>
+                    <span>ываыва</span>
                 </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>7</p>
-                        <img src="@/assets/7.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>8</p>
-                        <img src="@/assets/8.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>9</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>10</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>11</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>12</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>13</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>14</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>22</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>24</p>
-                        <img src="@/assets/9.svg" alt="avatar">
-                    </div>
-                    <span>@username</span>
-                </div>
-                <span>1122</span>
-            </div>
-            <div class="leaders-list__item user-place" :class="{ 'user-fixed': userPlaceNumber >= 10 }" id="user-place">
+                <span>999</span>
+            </div> -->
+
+            <div v-if="isHiddenElementVisible" class="user-fixed" id="user-place1">
                 <div class="leaders-list__item-inner">
                     <div>
                         <p>{{ userPlaceNumber }}</p>
                         <img src="@/assets/last.svg" alt="avatar">
                     </div>
-                    <span>@testik</span>
+                    <span>{{ currentLeader.username }}</span>
+
                 </div>
-                <span>202</span>
+                <span>{{ currentLeader.points }}</span>
             </div>
         </div>
     </div>
@@ -193,15 +96,15 @@
         <template #title></template>
         <template #body>
             <div class="menu">
-                <div>
+                <div @click="openChat">
                     <img src="@/assets/reload.svg" alt="reload">
                     <span>Сыграть ещё раз</span>
                 </div>
-                <div @click="openLeaderboard">
+                <div @click="openVacancies">
                     <img src="@/assets/op.svg" alt="item">
                     <span>Вакансии Ozon Tech</span>
                 </div>
-                <div>
+                <div @click="openTelegram">
                     <img src="@/assets/tg.svg" alt="tg">
                     <span>Перейти в телеграм-канал Ozon Tech</span>
                 </div>
@@ -212,6 +115,7 @@
 
 <script>
 import TheMenu from '@/components/TheMenu.vue';
+import axios from 'axios';
 
 export default {
     components: {
@@ -220,17 +124,109 @@ export default {
     data() {
         return {
             showMenu: false,
-            userPlaceNumber: 15,
+            userPlaceNumber: null,
+            isHiddenElementVisible: false,
+            leaders: [],
+            currentLeader: [],
+            first_leader: '',
+            second_leader: '',
+            third_leader: '',
+            first_leader_points: '',
+            second_leader_points: '',
+            third_leader_points: '',
         };
     },
     mounted() {
-        this.setInitialPosition();
-        window.addEventListener('scroll', this.checkPosition);
+        this.getLeaders();
+        this.getMyPoints();
+        document.body.style.overflow = 'auto';
+        this.checkVisibility();
+        window.addEventListener('scroll', this.checkVisibility);
     },
     beforeDestroy() {
-        window.removeEventListener('scroll', this.checkPosition);
+        window.removeEventListener('scroll', this.checkVisibility);
     },
     methods: {
+        openChat() {
+            this.$router.push('/chat/obx');
+            document.body.style.overflow = '';
+        },
+        openTelegram() {
+            window.location.href = 'https://t.me/s/ozon_tech';
+        },
+        openVacancies() {
+            window.location.href = 'https://ozon.tech/gamebot-job';
+        },
+        getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        },
+        getLeaders() {
+            const params = this.getCookie("uuid");
+
+            if (!params) {
+                console.error("Куки с именем 'uuid' не найдены.");
+                return;
+            }
+            console.log(params)
+
+            let url = 'https://api.ozontechhrbot.ru/api/leaderboard';
+
+            axios
+                .get(url, {
+                    params: {
+                        "code": params,
+                    },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.leaders = res.data.data;
+                    this.first_leader = res.data.data[0].username;
+                    this.second_leader = res.data.data[1].username;
+                    this.third_leader = res.data.data[2].username;
+                    this.first_leader_points = res.data.data[0].totalPoints;
+                    this.second_leader_points = res.data.data[1].totalPoints;
+                    this.third_leader_points = res.data.data[2].totalPoints;
+
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        },
+        getMyPoints() {
+            const params = this.getCookie("uuid");
+
+            if (!params) {
+                console.error("Куки с именем 'uuid' не найдены.");
+                return;
+            }
+
+            let url = 'https://api.ozontechhrbot.ru/api/leaderboard/me';
+
+            axios
+                .get(url, {
+                    params: {
+                        "code": params,
+                    },
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.currentLeader = res.data;
+                    this.userPlaceNumber = res.data.rank;
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        },
         openMenu() {
             this.showMenu = true;
             document.body.style.overflow = 'hidden';
@@ -238,11 +234,12 @@ export default {
         goBack() {
             this.$router.push('/finals/final');
         },
-        setInitialPosition() {
+        checkVisibility() {
             const leaderItems = Array.from(document.querySelectorAll('.leaders-list__item'));
             let userPlace = null;
             let previousPlace = null;
 
+            // Находим элементы пользователя и предыдущего места
             leaderItems.forEach(item => {
                 const placeNumber = parseInt(item.querySelector('p').textContent.trim(), 10);
                 if (placeNumber === this.userPlaceNumber) {
@@ -252,41 +249,41 @@ export default {
                 }
             });
 
-            if (userPlace) {
-                if (this.userPlaceNumber < 10) {
-                    if (this.userPlaceNumber === 4) {
-                        userPlace.parentNode.insertBefore(userPlace, userPlace.parentNode.firstChild);
-                    }
-                    previousPlace.after(userPlace);
-                    userPlace.style.boxShadow = 'none';
-                } else {
-                    userPlace.classList.add('user-fixed');
-                }
-            }
-        },
-        checkPosition() {
-            const leaderItems = Array.from(document.querySelectorAll('.leaders-list__item'));
-            let userPlace = null;
-            let previousPlace = null;
+            if (!userPlace) return;
+            const rect = userPlace.getBoundingClientRect();
+            const isOutOfView = rect.bottom < 0 || rect.top > window.innerHeight;
 
-            leaderItems.forEach(item => {
-                const placeNumber = parseInt(item.querySelector('p').textContent.trim(), 10);
-                if (placeNumber === this.userPlaceNumber) {
-                    userPlace = item;
-                } else if (placeNumber === this.userPlaceNumber - 1) {
-                    previousPlace = item;
-                }
-            });
-
-            if (userPlace && previousPlace && this.userPlaceNumber >= 10) {
-                const rect = userPlace.getBoundingClientRect();
-                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-                    previousPlace.after(userPlace);
-                    userPlace.classList.remove('user-fixed');
-                    userPlace.style.boxShadow = 'none';
-                }
-            }
+            // Обновляем состояние видимости
+            this.isHiddenElementVisible = isOutOfView;
         }
+
+
+
+        // checkPosition() {
+        //     const leaderItems = Array.from(document.querySelectorAll('.leaders-list__item'));
+        //     let userPlace = null;
+        //     let previousPlace = null;
+
+        //     leaderItems.forEach(item => {
+        //         const placeNumber = parseInt(item.querySelector('p').textContent.trim(), 10);
+        //         if (placeNumber === this.userPlaceNumber) {
+        //             userPlace = item;
+        //         } else if (placeNumber === this.userPlaceNumber - 1) {
+        //             previousPlace = item;
+        //         }
+        //     });
+
+        //     if (userPlace && previousPlace && this.userPlaceNumber >= 10) {
+        //         const rect = userPlace.getBoundingClientRect();
+        //         if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        //             previousPlace.after(userPlace);
+        //             userPlace.classList.remove('user-fixed');
+        //             userPlace.style.boxShadow = 'none';
+        //         } else {
+        //             userPlace.classList.add('user-fixed');
+        //         }
+        //     }
+        // }
     }
 }
 </script>
@@ -295,10 +292,12 @@ export default {
 .page {
     overflow: hidden;
     position: relative;
-    //height: 100vh;
     background-color: #02283E;
     background-image: url(@/assets/Vector.png);
     background-size: cover;
+
+    // height: 100vh;
+    // overflow-y: auto;
 }
 
 .header {
@@ -478,6 +477,7 @@ export default {
         display: flex;
         gap: 13px;
         align-items: center;
+        cursor: pointer;
 
         span {
             font-family: var(--gte);
@@ -500,10 +500,29 @@ export default {
 }
 
 .user-fixed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 6px 20px 6px 13px;
+    background: #383d46;
+
     position: fixed;
     bottom: 20px;
     right: 20px;
     left: 20px;
     transition: all 2s ease-in-out;
+
+    background: #64cc84;
+    box-shadow: 0 -7px 12px 10px #02283e;
+
+    span {
+        font-family: var(--gte);
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+        text-align: right;
+        color: #fff;
+    }
 }
 </style>

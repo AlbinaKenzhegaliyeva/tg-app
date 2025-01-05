@@ -1,35 +1,35 @@
 <template>
     <div class="page">
         <TheHeaderChat />
-        <div class="chat">
+        <div ref="chat" class="chat">
             <div class="chat__right">
                 <div class="chat__right-bubble right-text-1">
                     <TheChatWhite>
                         <template #chattng__text>
                             <img src="@/assets/ded.png" alt="pic">
-                            <span>Ребята из Ozon Tech учитывают такие кейсы при расчёте времени доставки, но мы очень
+                            <span>Ребята из Ozon Tech учитывают такие кейсы при расчёте времени доставки,<br> но мы очень
                                 торопимся.</span>
                         </template>
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
-            <div class="chat__left" v-show="showLeft">
+            <div class="chat__left show-left-1" v-show="showLeft">
                 <div class="chat__left-avatar left-avatar-1">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue :isLast="true">
@@ -42,16 +42,16 @@
                 </div>
             </div>
 
-            <div class="chat__right" v-show="showRight">
-                <div class="chat__right-bubble right-text-1">
+            <div class="chat__right_2 show-right-1" v-show="showRight">
+                <div class="chat__right-bubble">
                     <TheChatWhite>
                         <template #chattng__text>
                             <span>Включаю режим созвоноустойчивости.</span>
                         </template>
                     </TheChatWhite>
                 </div>
-                <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                <div class="chat__right-avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
@@ -59,19 +59,19 @@
                 <span>Вахтёр присоединился к чату</span>
             </div>
 
-            <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
-                    <img src="@/assets/ava_ded.svg" alt="avatar">
+                    <img src="@/assets/ava_ded.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
             <div class="chat__left" v-show="showLeftSecond">
-                <div class="chat__left-avatar left-avatar-1">
-                    <img src="@/assets/ava_ded.svg" alt="avatar">
+                <div ref = "avatar" class="chat__left-avatar show-left-1">
+                    <img src="@/assets/ava_ded.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble left-text-2">
                     <TheChatBlue :isLast="true">
@@ -84,9 +84,10 @@
                 </div>
             </div>
 
-            <div>
+            <div ref="scrollAnchor">
                 <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
             </div>
+
         </div>
     </div>
 </template>
@@ -100,35 +101,62 @@ export default {
     components: {
         TheHeaderChat, TheChatWhite, TheChatBlue
     },
+    methods: {
+        handleNoteAnimationEnd() {
+            this.showNote = false;
+        },
+        goTo() {
+            window.location.href = '/games/quiz';
+        },
+        scrollToElement() {
+            this.$nextTick(() => {
+                document.querySelector('.chat').scrollTo({
+                    top: document.querySelector('.chat').scrollHeight,
+                    behavior: 'smooth'
+                })
+
+            });
+        },
+    },
+
     mounted() {
+        // document.body.style.overflow = 'auto';
+        let el = this.$refs.avatar;
         setTimeout(() => {
             this.showNote = true;
-        }, 4000);
+        }, 1000);
 
         setTimeout(() => {
             this.showLeft = true;
-        }, 6000);
+        }, 2000);
 
         setTimeout(() => {
             this.showRight = true;
-        }, 7000);
+        }, 3000);
 
         setTimeout(() => {
             this.showWatchman = true;
-        }, 10000);
+        }, 5000);
 
         setTimeout(() => {
             this.showNote2 = true;
-        }, 12000);
+        }, 6000);
 
         setTimeout(() => {
             this.showNote2 = false;
             this.showLeftSecond = true;
-        }, 13000);
+            // if (el) {
+            //         el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+            //         el.style.opacity = '1'; // Убедитесь, что аватар виден
+            //         el.style.transform = `translateY(${finalIndex * 100}px)`; // Перемещение вниз
+            //     }
+        }, 5000);
 
         setTimeout(() => {
             this.showButton = true;
-        }, 14000);
+            this.scrollToElement();
+        }, 7000);
+
 
     },
     data() {
@@ -142,30 +170,26 @@ export default {
             showButton: false,
         }
     },
-    methods: {
-        handleNoteAnimationEnd() {
-            this.showNote = false;
-        },
-        goTo() {
-            this.$router.push('/door');
-        },
-    }
 }
 </script>
 
 <style lang="scss" scoped>
 .page {
     background-color: #02283E;
-    min-height: 100vh;
+
     background-image: url(@/assets/Vector.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .chat {
-    padding: 100px 7px 0;
+    padding: 80px 7px 50px;
+    margin: 0 0 10px 0;
+    height: 80vh;
+    overflow: auto;
+    // margin: 0 0 20px 0;
 
     &__left {
         display: flex;
@@ -176,6 +200,7 @@ export default {
 
         &-avatar {
             padding: 30px 0 0 0;
+            // opacity: 0;
         }
 
         &-bubble {
@@ -237,6 +262,37 @@ export default {
         }
     }
 
+    &__right_2 {
+        display: flex;
+        gap: 6px;
+        justify-content: end;
+        align-items: end;
+        margin: 26px 0 0 0;
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 120%;
+            color: #000;
+            position: relative;
+            z-index: 100;
+        }
+
+        &-bubble {
+            display: flex;
+            justify-content: center;
+            margin: 0 0 20px 0;
+            // opacity: 0;
+        }
+
+        &-avatar {
+            display: flex;
+            justify-content: flex-end;
+            // opacity: 0;
+        }
+    }
+
     &__note {
         display: flex;
         gap: 17px;
@@ -251,6 +307,7 @@ export default {
     }
 
     &__button {
+
         border-radius: 5px;
         box-shadow: 0 4px 0 0 #054fd4;
         background: #005bff;
@@ -262,17 +319,30 @@ export default {
         border: none;
         padding: 11px 124px;
         width: 100%;
-        margin: 34px 0 30px 0;
+        margin: 65px 0 0 0;
         white-space: nowrap;
+        cursor: pointer;
+
+        @media (max-width: 430px) {
+            margin: 65px 0 0 0;
+        }
+
+        @media (max-width: 425px) {
+            margin: 65px 0 0 0;
+        }
+
+        @media (max-width: 420px) {
+            margin: 65px 0 0 0;
+        }
     }
 
     &__watchman {
         border-radius: 24px;
-        padding: 5px 10px;
+        padding: 4px 10px;
         // height: 23px;
         backdrop-filter: blur(13.483146667480469px);
         background: rgba(255, 255, 255, 0.3);
-        margin: 27px 95px;
+        margin: 27px 80px;
         white-space: nowrap;
         display: flex;
         justify-content: center;
@@ -286,6 +356,10 @@ export default {
             color: #fff;
             text-align: center;
         }
+    }
+
+    .avatars {
+        width: 40px;
     }
 }
 
@@ -326,7 +400,7 @@ export default {
 }
 
 .left-note {
-    animation: fadeOut 1s ease-in forwards;
+    animation: fadeOut 0.3s ease-in forwards;
     animation-delay: 1s;
     opacity: 1;
 }
@@ -336,17 +410,34 @@ export default {
 }
 
 .right-avatar-1 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
+    opacity: 0;
 }
 
 .right-text-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+.show-left-1 {
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+.show-right-1 {
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 
 .left-text-2 {
     justify-content: flex-end;
     padding-right: 120px;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
+    opacity: 0;
 }
 </style>

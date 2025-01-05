@@ -12,29 +12,29 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
             <div class="chat__left show-left-1" v-show="showLeft">
                 <div class="chat__left-avatar avatar-1">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue :isLast="true">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
-                                <img src="@/assets/chat1.svg" alt="pic">
+                                <img src="@/assets/chat1.png" alt="pic">
                                 <span>Ты прав! У нас здесь настоящий хайлоад. Но не волнуйся, доставим тебя в
                                     срок.</span>
                             </div>
@@ -43,8 +43,11 @@
                 </div>
             </div>
 
-            <div class="tap" v-if="showTap">
+            <!-- <div class="tap" v-if="showTap">
                 <img src="@/assets/tap.svg" alt="tap" @click="addNewChat">
+            </div> -->
+            <div class="tap-container" v-if="showTap" @click="addNewChat">
+                <img src="@/assets/tap.svg" alt="tap" class="tap">
             </div>
 
             <div class="chat__right" v-show="showNewChat">
@@ -57,29 +60,30 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-2">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-show="showSecondNote" @animationend="handleSecondNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-show="showSecondNote" @animationend="handleSecondNoteAnimationEnd">
                 <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
             <div class="chat__left show-left-1" v-show="showLeftNewChat">
                 <div class="chat__left-avatar" ref="avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
-                <div class="chat__left-bubble" >
+                <div class="chat__left-bubble">
                     <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]"
                         :isLast="index === chatMessages.length - 1">
                         <template #chattng__text>
-                            <div class="chat__left-bubble_inner" :ref="'scrollAnchor' + index">
+                            <!-- <div class="chat__left-bubble_inner" :ref="'scrollAnchor' + index"> -->
+                            <div class="chat__left-bubble_inner">
                                 <span>{{ message }}</span>
                             </div>
 
@@ -88,14 +92,15 @@
                 </div>
             </div>
 
-            <!-- <div ref="scrollAnchor"></div> -->
-
-            <div class="tap2" v-if="showTap2" ref="scrollAnchor10">
+            <!-- <div class="tap2" v-if="showTap2" ref="scrollAnchor10">
                 <img src="@/assets/tap.svg" alt="tap" @click="addFinalChat">
-            </div>
-            <!-- <div ref="scrollAnchor1"></div> -->
+            </div> -->
 
-            <div class="chat__right" v-show="showRightFinal">
+            <div class="tap2-container" v-if="showTap2" @click="addFinalChat" ref="scrollAnchor10">
+                <img src="@/assets/tap.svg" alt="tap" class="tap2">
+            </div>
+
+            <div class="chat__right_2" v-show="showRightFinal">
                 <div class="chat__right-bubble right-text-3">
                     <TheChatWhite>
                         <template #chattng__text>
@@ -104,41 +109,41 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-3">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
-            <!-- <div ref="scrollAnchor1"></div> -->
+            <div ref="scrollAnchor11"></div>
 
-            <div class="chat__note left-note-final" v-show="showThirdNote" @animationend="handleSecondNoteAnimationEnd">
+            <!-- <div class="chat__note left-note-final" v-show="showThirdNote" @animationend="handleSecondNoteAnimationEnd">
                 <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
-            <div ref="scrollAnchor11"></div>
+            </div> -->
+            <div ref="scrollAnchor12"></div>
 
             <div class="chat__left" v-show="showLeftFinal">
-                <div class="chat__left-avatar" ref="avatar2">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                <div ref="avatar2" style="opacity: 0; transform: translateY(0); transition: transform 0.5s ease, opacity 0.5s ease;">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble">
-                    <TheChatBlue  v-for="(message, index) in chatFinalMessages" :key="index"
-                    v-show="showChatBlueFinal[index]">
+                    <TheChatBlue v-for="(message, index) in chatFinalMessages" :key="index"
+                        v-show="showChatBlueFinal[index]">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <span>{{ message }}</span>
                             </div>
                         </template>
                     </TheChatBlue>
-                    <TheChatBlue :isLast="true" v-show="showChatBlueFinal[1]">
+                    <TheChatBlue :isLast="true" v-show="lastMessage">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
-                                <img src="@/assets/obx.svg" alt="pic">
-                                <span>А за измерение веса отвечают классические тензодатчики. </span>
+                                <img src="@/assets/obx.png" alt="pic">
+                                <span>А за измерение веса отвечают классические тензодатчики.</span>
                             </div>
                         </template>
                     </TheChatBlue>
@@ -185,29 +190,45 @@ export default {
             ],
             showChatBlueFinal: [false, false],
             showButton: false,
+            lastMessage: false,
         };
     },
     mounted() {
-        setTimeout(() => {
-            this.showNote = true;
-        }, 2500);
+        document.body.style.overflow = '';
 
         setTimeout(() => {
-            this.showNote = false;
+            this.showNote = true;
+        }, 500);
+
+        setTimeout(() => {
+            // this.showNote = false;
             this.showLeft = true;
         }, 2000);
 
         setTimeout(() => {
             this.showTap = true;
-        }, 6000);
+        }, 5000);
     },
     methods: {
+        setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            const expires = `expires=${date.toUTCString()}`;
+            document.cookie = `${name}=${value};${expires};path=/`;
+        },
+        getCookie(name) {
+            const matches = document.cookie.match(new RegExp(
+                `(?:^|; )${name.replace(/([$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`
+            ));
+            return matches ? decodeURIComponent(matches[1]) : null;
+        },
         scrollToElement(refName) {
             this.$nextTick(() => {
-                const targetElement = this.$refs[refName];
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                }
+                document.querySelector('.chat').scrollTo({
+                    top: document.querySelector('.chat').scrollHeight,
+                    behavior: 'smooth'
+                })
+
             });
         },
         handleNoteAnimationEnd() {
@@ -218,85 +239,180 @@ export default {
             this.showTap = false;
             setTimeout(() => {
                 this.showSecondNote = true;
-            }, 3000);
+            }, 1000);
             setTimeout(() => {
                 this.showSecondNote = false;
                 this.showLeftNewChat = true;
                 this.showChatMessages();
-            }, 6000);
+            }, 1000);
         },
-        handleSecondNoteAnimationEnd() {
-            this.showSecondNote = false;
-
-            let el = this.$refs.avatar;
-            setTimeout(() => {
-                el.classList.add('avatar-padding');
-            }, 3000);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-2');
-            }, 4000);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-3');
-            }, 5000);
-        },
+        // handleSecondNoteAnimationEnd() {
+        //     this.showSecondNote = false;
+        //     // el.classList.add('fadeout');
+        //     let el = this.$refs.avatar;
+        //     setTimeout(() => {
+        //         el.classList.add('avatar-padding');
+        //     }, 0);
+        //     setTimeout(() => {
+        //         el.classList.add('avatar-padding-2');
+        //     }, 500);
+        //     setTimeout(() => {
+        //         el.classList.add('avatar-padding-3');
+        //     }, 1000);  //3 4 5
+        // },
         showChatMessages() {
             setTimeout(() => {
+                const avatar = this.$refs.avatar;
                 this.chatMessages.forEach((message, index) => {
                     setTimeout(() => {
+                        // Отображаем сообщение
                         this.showChatBlue[index] = true;
+
+                        // Отображаем аватар и синхронизируем его движение с сообщением
+                        if (avatar) {
+                            avatar.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                            avatar.style.opacity = '1'; // Убедитесь, что аватар виден
+                            avatar.style.transform = `translateY(${index * 90}px)`; // Перемещение вниз
+                        }
+
+                        // Скроллим вниз
                         this.scrollToElement(`scrollAnchor${index}`);
-                    }, index * 1000);
+                    }, index * 1000); // Задержка между появлениями сообщений и аватара
                 });
-
-            }, 2000);
-
+            }, 1000);
 
             setTimeout(() => {
                 this.showTap2 = true;
-                this.scrollToElement("scrollAnchor10");
+               this.scrollToElement("scrollAnchor10");
             }, 4000);
-
         },
         addFinalChat() {
             this.showRightFinal = true;
             this.showTap2 = false;
+            this.scrollToElement("scrollAnchor11");
             setTimeout(() => {
                 this.showThirdNote = true;
-                this.scrollToElement("scrollAnchor11");
+                this.scrollToElement("scrollAnchor12");
             }, 3000);
             setTimeout(() => {
                 this.showThirdNote = false;
                 this.showLeftFinal = true;
                 this.showFinalMessages();
-            }, 6000);
+            }, 1000);
         },
         showFinalMessages() {
             let el = this.$refs.avatar2;
-            setTimeout(() => {
-                el.classList.add('avatar-padding-4');
-            }, 2000);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-5');
-            }, 3000);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-6');
-            }, 3000);
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-4');
+            // }, 500);
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-5');
+            // }, 3000);
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-6');
+            // }, 4000);  //2 3 3
 
             setTimeout(() => {
                 this.chatFinalMessages.forEach((message, index) => {
                     setTimeout(() => {
                         this.showChatBlueFinal[index] = true;
+                        if (el) {
+                            el.style.opacity = '1';
+                            el.classList.add('avatar-padding-4');
+                            el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                             // Убедитесь, что аватар виден
+                            el.style.transform = `translateY(${index * 100}px)`; // Перемещение вниз
+                        }
                         this.scrollToElement("scrollAnchor3");
                     }, index * 1000);
                 });
             }, 2000);
             setTimeout(() => {
+                let el = this.$refs.avatar2;
+                const finalIndex = this.chatFinalMessages.length;
                 this.showButton = true;
+                this.lastMessage = true;
+                if (el) {
+                    el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                    el.style.opacity = '1'; // Убедитесь, что аватар виден
+                    el.style.transform = `translateY(${finalIndex * 175}px)`; // Перемещение вниз
+                }
                 this.scrollToElement("scrollAnchor4");
-            }, 6000);
+            }, 4000);
         },
-        goTo() {
-            this.$router.push('/chat/sort');
+        async goTo() {
+            try {
+                // Получаем CSRF-токен и UUID из cookies
+                await this.fetchCsrfToken(); // Дожидаемся завершения получения CSRF-токена
+                const csrfToken = this.getCookie('XSRF-TOKEN');
+                const uuid = this.getCookie('uuid');
+
+                // Проверяем наличие CSRF-токена и UUID
+                if (!csrfToken) {
+                    console.error('CSRF-токен не найден в куках.');
+                    return;
+                }
+                if (!uuid) {
+                    console.error('UUID не найден в куках.');
+                    return;
+                }
+
+                // Формируем URL для запроса
+                const url = new URL("https://api.ozontechhrbot.ru/api/leaderboard/create");
+                url.searchParams.append('code', uuid);
+
+                // Устанавливаем заголовки
+                const headers = {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-XSRF-TOKEN": csrfToken,
+                    "Sec-Fetch-Dest": "empty",
+                    "Sec-Fetch-Mode": "cors",
+                    "Sec-Fetch-Site": "same-origin", // Используется, если фронтенд и API на одном домене
+                };
+
+                // Выполняем POST-запрос
+                const response = await fetch(url.toString(), {
+                    method: "POST",
+                    headers,
+                    credentials: "include", // Включаем cookies в запрос
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    throw new Error(`Ошибка запроса: ${response.status} ${response.statusText}`);
+                }
+
+                // Обрабатываем успешный ответ
+                const data = await response.json();
+                console.log('Данные успешно отправлены:', data);
+
+                // Переход на другую страницу
+                window.location.href = '/games/tetris';
+            } catch (error) {
+                // Логируем ошибку
+                console.error('Ошибка при отправке данных:', error);
+            }
+        },
+        async fetchCsrfToken() {
+            try {
+                const response = await fetch('https://api.ozontechhrbot.ru/sanctum/csrf-cookie', {
+                    method: 'GET',
+                    credentials: 'include', // Включает отправку и получение cookies
+                    headers: {
+                        'Accept': 'application/json', // Указываем, что ожидаем JSON-ответ
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка получения CSRF-cookie: ${response.status} ${response.statusText}`);
+                }
+
+                console.log('CSRF-cookie успешно установлены.');
+                // Если куки успешно установлены, они будут доступны для последующих запросов.
+            } catch (error) {
+                console.error('Ошибка при запросе CSRF-cookie:', error.message);
+            }
         },
     }
 }
@@ -305,16 +421,19 @@ export default {
 <style lang="scss" scoped>
 .page {
     background-color: #02283E;
-    min-height: 100vh;
+    // height: 100vh;
     background-image: url(@/assets/Vector.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .chat {
-    padding: 80px 7px 0;
+    padding: 80px 7px 50px;
+    margin: 0 0 20px 0;
+    height: 80vh;
+    overflow: auto;
 
     &__button {
         border-radius: 5px;
@@ -328,8 +447,9 @@ export default {
         border: none;
         padding: 11px 124px;
         width: 100%;
-        margin: 34px 0 50px 0;
+        margin: 65px 0 0 0;
         white-space: nowrap;
+        cursor: pointer;
     }
 
     &__right {
@@ -338,6 +458,37 @@ export default {
         justify-content: end;
         align-items: end;
         margin: 13px 0 0 0;
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 120%;
+            color: #000;
+            position: relative;
+            z-index: 100;
+        }
+
+        &-bubble {
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            margin: 0 0 20px 0;
+        }
+
+        &-avatar {
+            display: flex;
+            justify-content: flex-end;
+            opacity: 0;
+        }
+    }
+
+    &__right_2 {
+        display: flex;
+        gap: 5px;
+        justify-content: end;
+        align-items: end;
+        margin: 48px 0 0 0;
 
         span {
             font-family: var(--gte);
@@ -384,7 +535,7 @@ export default {
         margin: 13px 0 0 0;
 
         &-avatar {
-            padding: 10px 0 0 0;
+            padding: 30px 0 0 0;
         }
 
         &-bubble {
@@ -433,7 +584,12 @@ export default {
         cursor: pointer;
         display: inline-block;
         float: right;
-        padding: 0 13px 100px 0;
+        padding: 0 13px 10px 0;
+        margin: 20px 0px 0px 0px;
+    }
+
+    .avatars {
+        width: 40px;
     }
 }
 
@@ -501,77 +657,59 @@ export default {
 }
 
 .right-text-1 {
-    animation: fadeIn 0.5s ease-in forwards;
-    animation-delay: 1.4s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 
 .left-note {
-    animation: fadeOut 1s ease-in forwards;
+    animation: fadeOut 0.3s ease-in forwards;
     animation-delay: 1s;
-    opacity: 1;
+    opacity: 0;
 }
 
 .left-note-final {
     animation: fadeOut 1s ease-in forwards;
-    animation-delay: 2s;
+    animation-delay: 1s;
     opacity: 1;
 }
 
 .show-left-1 {
-    animation: fadeIn 0.6s ease-in forwards;
-    animation-delay: 2.4s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 
 .right-avatar-2 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
 }
 
 .right-text-2 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
 }
 
 .right-avatar-3 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
 }
 
 .right-text-3 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
 }
 
 .pen-animation {
     animation: penMove 0.5s ease-in-out infinite;
 }
 
-.move-up {
-    // transform: translateY(-80px);
-    // animation: 0;
-    // opacity: 1;
-    animation: moveUp 0.5s ease forwards;
-    opacity: 1;
-}
-
-@keyframes moveUp {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-60px);
-    }
-}
-
 .avatar-1 {
-    padding: 240px 0 0 0;
+    padding: 260px 0 0 0;
 }
 
 .avatar-3 {
-    padding: 380px 0 0 0;
+    padding: 420px 0 0 0;
 }
 
 .avatar-padding {
@@ -583,26 +721,44 @@ export default {
 }
 
 .avatar-padding-3 {
-    padding: 200px 0 0 0;
+    padding: 160px 0 0 0;
 }
 
 .avatar-padding-4 {
-    padding: 50px 0 0 0;
-}
-
-.avatar-padding-4 {
-    padding: 50px 0 0 0;
+    padding: 40px 0 0 0;
 }
 
 .avatar-padding-5 {
-    padding: 130px 0 0 0;
+    padding: 110px 0 0 0;
 }
 
 .avatar-padding-6 {
-    padding: 380px 0 0 0;
+    padding: 300px 0 0 0;
 }
 
-// .scroll-target {
-//   scroll-margin-top: 200px; /* регулируйте отступ под свои нужды */
-// }
+.tap-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.tap2-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 1000;
+    cursor: pointer;
+}
 </style>

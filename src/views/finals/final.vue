@@ -17,12 +17,12 @@
                 немного смешного.
             </span>
             <span>
-                А ещё у нашего бота есть статьи про упомянутые в игре решения.
+                А ещё у нашего бота есть статьи про упомянутые <br> в игре решения.
             </span>
         </div>
 
         <img src="@/assets/hello.png" alt="logo" class="goose">
-        <div class="button">
+        <div class="button" @click="openVacancies">
             <span>Вакансии в Ozon Tech</span>
             <img src="@/assets/op.svg" alt="go">
         </div>
@@ -32,7 +32,7 @@
         <template #title></template>
         <template #body>
             <div class="menu">
-                <div>
+                <div @click="openChat">
                     <img src="@/assets/reload.svg" alt="reload">
                     <span>Сыграть ещё раз</span>
                 </div>
@@ -40,7 +40,7 @@
                     <img src="@/assets/coin.svg" alt="coin">
                     <span>Открыть таблицу лидеров</span>
                 </div>
-                <div>
+                <div @click="openTelegram">
                     <img src="@/assets/tg.svg" alt="tg">
                     <span>Перейти в телеграм-канал Ozon Tech</span>
                 </div>
@@ -63,11 +63,99 @@ export default {
         };
     },
     mounted() {
+        document.body.style.overflow = 'hidden';
         setTimeout(() => {
             this.showText = true;
         }, 800);
     },
     methods: {
+        // openVacancies() {
+        //     window.location.href = 'https://ozon.tech/gamebot-job';
+        // },
+        getCookie(name) {
+            const matches = document.cookie.match(new RegExp(
+                `(?:^|; )${name.replace(/([$?*|{}()[\]\\/+^])/g, '\\$1')}=([^;]*)`
+            ));
+            return matches ? decodeURIComponent(matches[1]) : null;
+        },
+        async fetchCsrfToken() {
+            try {
+                const response = await fetch('https://api.ozontechhrbot.ru/sanctum/csrf-cookie', {
+                    method: 'GET',
+                    credentials: 'include', // Включает отправку и получение cookies
+                    headers: {
+                        'Accept': 'application/json', // Указываем, что ожидаем JSON-ответ
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка получения CSRF-cookie: ${response.status} ${response.statusText}`);
+                }
+
+                console.log('CSRF-cookie успешно установлены.');
+                // Если куки успешно установлены, они будут доступны для последующих запросов.
+            } catch (error) {
+                console.error('Ошибка при запросе CSRF-cookie:', error.message);
+            }
+        },
+        async openVacancies() {
+            // window.location.href = 'https://ozon.tech/gamebot-job';
+
+            try {
+                // Получаем CSRF-токен и UUID из cookies
+                await this.fetchCsrfToken(); // Дожидаемся завершения получения CSRF-токена
+                const csrfToken = this.getCookie('XSRF-TOKEN');
+                const user_id = this.getCookie('user_id');
+
+                // Проверяем наличие CSRF-токена и UUID
+                if (!csrfToken) {
+                    console.error('CSRF-токен не найден в куках.');
+                    return;
+                }
+                if (!user_id) {
+                    console.error('user_id не найден в куках.');
+                    return;
+                }
+
+                // Формируем URL для запроса
+                const url = new URL(`https://ozon.tech/gamebot-job`);
+                url.searchParams.append('utm_source', 'tg');
+                url.searchParams.append('utm_medium', 'gamebot');
+                url.searchParams.append('utm_campaign', user_id);
+
+                // Устанавливаем заголовки
+                const headers = {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-XSRF-TOKEN": csrfToken,
+                    "Sec-Fetch-Dest": "empty",
+                    "Sec-Fetch-Mode": "cors",
+                    "Sec-Fetch-Site": "same-origin", // Используется, если фронтенд и API на одном домене
+                };
+
+                // Выполняем POST-запрос
+                const response = await fetch(url.toString(), {
+                    method: "POST",
+                    headers,
+                    credentials: "include", // Включаем cookies в запрос
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    throw new Error(`Ошибка запроса: ${response.status} ${response.statusText}`);
+                }
+
+                // Обрабатываем успешный ответ
+                const data = await response.json();
+                console.log('Данные успешно отправлены:', data);
+
+                // Переход на другую страницу
+                window.location.href = url;
+            } catch (error) {
+                // Логируем ошибку
+                console.error('Ошибка при отправке данных:', error);
+            }
+        },
         openMenu() {
             this.showMenu = true;
             document.body.style.overflow = 'hidden';
@@ -76,6 +164,13 @@ export default {
             this.$router.push('/finals/leaderboard');
             document.body.style.overflow = '';
         },
+        openChat() {
+            this.$router.push('/chat/obx');
+            document.body.style.overflow = '';
+        },
+        openTelegram() {
+            window.location.href = 'https://t.me/s/ozon_tech';
+        }
     }
 }
 </script>
@@ -134,9 +229,23 @@ export default {
         width: 215px;
     }
 
+    @media (max-width: 600px) {
+        left: 130px;
+        width: 254px;
+    }
+
     @media (max-width: 430px) {
         left: 80px;
+    }
+
+    @media (max-width: 425px) {
+        width: 225px;
+        left: 120px;
+    }
+
+    @media (max-width: 420px) {
         width: 254px;
+        left: 80px;
     }
 }
 
@@ -193,6 +302,7 @@ export default {
         display: flex;
         gap: 13px;
         align-items: center;
+        cursor: pointer;
 
         span {
             font-family: var(--gte);

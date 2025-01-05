@@ -4,7 +4,7 @@
         <div class="chat">
             <div class="chat__left">
                 <div class="chat__left-avatar avatar-1">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue :isLast="true">
@@ -27,25 +27,25 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
             <div class="chat__note left-note" v-show="showNote" @animationend="handleNoteAnimationEnd">
-                <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
-                </div>
-                <div class="chat__note-pen">
+                <!-- <div class="chat__note-avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                </div> -->
+                <!-- <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
-                </div>
+                </div> -->
             </div>
 
-            <div class="chat__left" v-show="showLeftSecond">
+            <div class="chat__left show-left-1" v-show="showLeftSecond">
                 <div class="chat__left-avatar" ref="avatar">
-                        <img src="@/assets/ava_g.svg" alt="avatar">
-                    </div>
-                <div class="chat__left-bubble left-text-2">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                </div>
+                <div class="chat__left-bubble">
                     <TheChatBlue :isLast="true && !finalMessageAdded">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
@@ -64,8 +64,12 @@
                 </div>
             </div>
 
-            <div class="tap" v-if="showTap">
+            <!-- <div class="tap" v-if="showTap">
                 <img src="@/assets/tap.svg" alt="tap" @click="addNewChat">
+            </div> -->
+
+            <div class="tap-container" v-if="showTap" @click="addNewChat">
+                <img src="@/assets/tap.svg" alt="tap" class="tap">
             </div>
 
             <div class="chat__right show-right-2" v-if="showRightSecond">
@@ -77,23 +81,23 @@
                     </TheChatWhite>
                 </div>
                 <div class="chat__right-avatar right-avatar-2">
-                    <img src="@/assets/ava_b.svg" alt="avatar">
+                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
 
             <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
-                <div class="chat__note-avatar">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
-                </div>
-                <div class="chat__note-pen">
+                <!-- <div class="chat__note-avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                </div> -->
+                <!-- <div class="chat__note-pen">
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
-                </div>
+                </div> -->
             </div>
 
             <div class="chat__left" v-show="showLeftThird">
-                <div class="chat__left-avatar avatar-2">
-                    <img src="@/assets/ava_g.svg" alt="avatar">
+                <div ref="last_avatar">
+                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
                 <div class="chat__left-bubble">
                     <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]"
@@ -104,7 +108,7 @@
                             </div>
                         </template>
                     </TheChatBlue>
-                    <TheChatBlue :isLast="true" class="chat_width">
+                    <TheChatBlue :isLast="true" class="chat_width" v-show="lastMessage">
                         <template #chattng__text>
                             <div class="chat__left-bubble_inner">
                                 <img src="@/assets/z.png" alt="pic">
@@ -115,7 +119,9 @@
                 </div>
             </div>
 
-            <div ref="scrollAnchor">
+            <div ref="scrollAnchor"></div>
+
+            <div ref="scrollAnchor1" v-show="lastMessage">
                 <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
             </div>
         </div>
@@ -133,27 +139,19 @@ export default {
     mounted() {
         setTimeout(() => {
             this.showRight = true;
-        }, 2000);
+        }, 1000);
 
-        setTimeout(() => {
-            this.showNote = true;
-        }, 4000);
+        // setTimeout(() => {
+        //     this.showNote = true;
+        // }, 4000);
 
         setTimeout(() => {
             this.showLeftSecond = true;
-        }, 8000);
+        }, 2000);
 
         setTimeout(() => {
             this.showTap = true;
-        }, 9000);
-
-        setTimeout(() => {
-            this.chatMessages.forEach((message, index) => {
-                setTimeout(() => {
-                    this.showChatBlue[index] = true;
-                }, index * 1000);
-            });
-        }, 2000);
+        }, 4000);
     },
     data() {
         return {
@@ -172,6 +170,7 @@ export default {
             clickedTap: false,
             finalMessageAdded: false,
             showRightSecond: false,
+            lastMessage: false,
         }
     },
     methods: {
@@ -194,19 +193,46 @@ export default {
             this.showTap = false;
             setTimeout(() => {
                 this.showRightSecond = true;
-            }, 2000);
+            }, 0);
             setTimeout(() => {
                 this.showNote2 = true;
-            }, 4000);
+            }, 0);
             setTimeout(() => {
                 this.showNote2 = false;
                 this.showLeftThird = true;
-                this.scrollToElement("scrollAnchor");
+                this.showChatMessages();
                 this.showButton = true;
-            }, 10000);
+                // this.scrollToElement("scrollAnchor1");
+            }, 2000);
+        },
+        showChatMessages() {
+            let el = this.$refs.last_avatar;
+            setTimeout(() => {
+                el.classList.add('avatar-padding-1');
+            }, 0);
+            setTimeout(() => {
+                el.classList.add('avatar-padding-2');
+            }, 1000);
+            setTimeout(() => {
+                el.classList.add('avatar-padding-3');
+            }, 2000);  //1 3 4
+
+            setTimeout(() => {
+                this.chatMessages.forEach((message, index) => {
+                    setTimeout(() => {
+                        this.showChatBlue[index] = true;
+                        this.scrollToElement("scrollAnchor");
+                    }, index * 1000);
+
+                    setTimeout(() => {
+                        this.lastMessage = true;
+                        this.scrollToElement("scrollAnchor1");
+                    }, 2000);
+                });
+            }, 0);
         },
         goTo() {
-            this.$router.push('/chat/quiz');
+            window.location.href = '/games/routs';
         },
     }
 }
@@ -215,12 +241,12 @@ export default {
 <style lang="scss" scoped>
 .page {
     background-color: #02283E;
-    min-height: 100vh;
+    height: 100vh;
     background-image: url(@/assets/Vector.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .chat {
@@ -323,6 +349,11 @@ export default {
         width: 100%;
         margin: 34px 0 50px 0;
         white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .avatars {
+        width: 40px;
     }
 }
 
@@ -391,20 +422,13 @@ export default {
 }
 
 .left-note {
-    animation: fadeOut 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeOut 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 1;
 }
 
 .pen-animation {
     animation: penMove 0.5s ease-in-out infinite;
-}
-
-.left-text-2 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 1s;
-    opacity: 0;
-    justify-content: flex-end;
 }
 
 .chat_width {
@@ -428,13 +452,19 @@ export default {
 }
 
 .show-right-1 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
     opacity: 0;
 }
 
 .show-right-2 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+.show-left-1 {
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
     opacity: 0;
 }
@@ -443,11 +473,32 @@ export default {
     padding: 230px 0 0 0;
 }
 
-.avatar-2 {
+.avatar-padding {
+    padding: 80px 0 0 0;
+}
+
+.avatar-padding-1 {
+    padding: 10px 0 0 0;
+}
+
+.avatar-padding-2 {
+    padding: 110px 0 0 0;
+}
+
+.avatar-padding-3 {
     padding: 350px 0 0 0;
 }
 
-.avatar-padding {
-    padding: 80px 0 0 0;
+.tap-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
 }
 </style>
