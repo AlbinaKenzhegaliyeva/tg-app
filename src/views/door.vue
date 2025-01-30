@@ -70,7 +70,7 @@ export default {
             this.showCharacters = false;
             this.showDoor = false;
             this.showFlag = true;
-        }, 9000);
+        }, 7000);
         setTimeout(() => {
             this.showFinalCharacters = true;
         }, 11000);

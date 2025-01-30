@@ -6,7 +6,7 @@
         <img src="@/assets/open_eyes.png" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose"
             v-show="!goose && !smirk">
         <div class="greetings__dialog" v-if="isVisible">
-            <img src="@/assets/dialog.svg" alt="dialog" class="greetings__dialog-bubble">
+            <img src="@/assets/dialog.png" alt="dialog" class="greetings__dialog-bubble">
             <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
         </div>
         <div class="greetings__info" v-if="isVisible">
@@ -20,7 +20,7 @@
         <!-- <img src="@/assets/Corobchik.svg" alt="box" class="greetings__corobchik" v-show="corobchik"> -->
         <img src="@/assets/Corobchik_neww.png" alt="box" class="greetings__corobchik" v-show="corobchik">
         <div class="greetings__about-korobchik" v-if="corobchikVisible">
-            <img src="@/assets/text.svg" alt="dialog" class="greetings__about-korobchik-bubble">
+            <img src="@/assets/dialog2.png" alt="dialog" class="greetings__about-korobchik-bubble">
             <div class="greetings__about-korobchik-text">
                 <span>А это Коробчик — подарок на день рождения и один из 6 100 000 ежедневных заказов на
                     Ozon.</span>
@@ -47,7 +47,7 @@
             <img src="@/assets/final-bubble.png" alt="dialog">
             <span>
                 Мы собираем данные для формирования лидерборда и отправки подарков победителям, другие пользователи
-                увидят только твой ник
+                увидят только твой ник.
             </span>
         </div>
 
@@ -371,6 +371,10 @@ export default {
 
             @media (max-width: 600px) {
                 width: auto;
+            }
+
+            @media (max-width: 430px) {
+                width: 450px;
             }
         }
 
@@ -833,7 +837,7 @@ export default {
 
         div {
             border-radius: 5px;
-            padding: 11px 11px 11px 13px;
+            padding: 9px;
             box-shadow: 0 4px 0 0 #054fd4;
             background: #005bff;
         }

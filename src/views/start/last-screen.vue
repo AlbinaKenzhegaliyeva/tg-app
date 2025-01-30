@@ -4,7 +4,7 @@
         <img src="@/assets/open_eyes.png" alt="goose" class="greetings__goose">
         <img src="@/assets/Corobchik_neww.png" alt="box" class="greetings__corobchik">
         <div class="greetings__dialog">
-            <img src="@/assets/text2.svg" alt="dialog">
+            <img src="@/assets/dialog3.png" alt="dialog">
             <span>В этой игре тебе предстоит доставить Коробчика имениннику.</span>
         </div>
         <button class="greetings__button" @mousedown="sayHello" @mouseup="resetStyle" ref="btn" @click="goTo">Не

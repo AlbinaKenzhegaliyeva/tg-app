@@ -187,7 +187,12 @@ export default {
         },
         addNewChat() {
             let el = this.$refs.avatar;
-            el.classList.add('avatar-padding');
+            // el.classList.add('avatar-padding');
+            if (el) {
+                el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                el.style.opacity = '1'; // Убедитесь, что аватар виден
+                el.style.transform = `translateY(${1 * 80}px)`; // Перемещение вниз
+            }
             this.clickedTap = true;
             this.finalMessageAdded = true;
             this.showTap = false;
@@ -201,32 +206,44 @@ export default {
                 this.showNote2 = false;
                 this.showLeftThird = true;
                 this.showChatMessages();
-                this.showButton = true;
+
                 // this.scrollToElement("scrollAnchor1");
             }, 2000);
         },
         showChatMessages() {
             let el = this.$refs.last_avatar;
-            setTimeout(() => {
-                el.classList.add('avatar-padding-1');
-            }, 0);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-2');
-            }, 1000);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-3');
-            }, 2000);  //1 3 4
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-1');
+            // }, 0);
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-2');
+            // }, 1000);
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-3');
+            // }, 2000);  //1 3 4
 
             setTimeout(() => {
                 this.chatMessages.forEach((message, index) => {
                     setTimeout(() => {
                         this.showChatBlue[index] = true;
+                        if (el) {
+                            el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                            el.style.opacity = '1'; // Убедитесь, что аватар виден
+                            el.style.transform = `translateY(${index * 110}px)`; // Перемещение вниз
+                        }
                         this.scrollToElement("scrollAnchor");
                     }, index * 1000);
 
                     setTimeout(() => {
                         this.lastMessage = true;
                         this.scrollToElement("scrollAnchor1");
+                        el.style.paddingBottom = '50px';
+                        el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                        el.style.opacity = '1'; // Убедитесь, что аватар виден
+                        el.style.transform = `translateY(${3 * 120}px)`; // Перемещение вниз
+                        this.showButton = true;
+
+
                     }, 2000);
                 });
             }, 0);
@@ -347,7 +364,7 @@ export default {
         border: none;
         padding: 11px 124px;
         width: 100%;
-        margin: 34px 0 50px 0;
+        margin: 50px 0 50px 0;
         white-space: nowrap;
         cursor: pointer;
     }

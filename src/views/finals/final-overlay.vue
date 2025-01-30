@@ -24,8 +24,12 @@
             </span>
         </div>
 
-        <div class="tap" v-show="showTap" @click="goToFinal">
+        <!-- <div class="tap" v-show="showTap" @click="goToFinal">
             <img src="@/assets/tap.svg" alt="tap">
+        </div> -->
+
+        <div class="tap-container" v-show="showTap" @click="goToFinal">
+            <img src="@/assets/tap.svg" alt="tap" class="tap">
         </div>
 
 
@@ -307,6 +311,19 @@ export default {
             color: #fff;
         }
     }
+}
+
+.tap-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
 }
 
 @keyframes heartbeat {

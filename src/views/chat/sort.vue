@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
                     <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
@@ -38,7 +38,7 @@
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
             <div class="chat__left show-left-1" v-show="showLeftSecond">
                 <div class="chat__left-avatar avatar-1">
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
+            <!-- <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
                     <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
@@ -85,7 +85,7 @@
                     <img src="@/assets/pen.svg" alt="avatar" class="pen-animation">
                     <img src="@/assets/paper.svg" alt="avatar">
                 </div>
-            </div>
+            </div> -->
 
             <div class="chat__left" v-show="showLeftThird">
                 <div ref="avatar">
@@ -122,7 +122,7 @@
             <div ref="scrollAnchor"></div>
 
             <div class="chat__right show-right-3" v-show="showRightThird">
-                <div class="chat__right-bubble">
+                <div class="chat__right-bubble2">
                     <TheChatWhite>
                         <template #chattng__text>
                             <span>Стать CTO?!</span>
@@ -133,7 +133,7 @@
                     <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
                 </div>
             </div>
-
+            <div ref="scrollAnchor4"></div>
             <div class="chat__left" v-show="showLeftFourth">
                 <div class="chat__left-avatar avatar-3">
                     <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
@@ -171,19 +171,19 @@ export default {
     mounted() {
         setTimeout(() => {
             this.showRight = true;
-        }, 2000);
+        }, 1000);
 
         setTimeout(() => {
             this.showNote = true;
-        }, 5000);
+        }, 2000);
 
         setTimeout(() => {
             this.showLeftSecond = true;
-        }, 7000);
+        }, 3000);
 
         setTimeout(() => {
             this.showTap = true;
-        }, 10000);
+        }, 5000);
     },
     data() {
         return {
@@ -240,14 +240,19 @@ export default {
             setTimeout(() => {
                 el.classList.add('avatar-padding-1');
             }, 0);
-            setTimeout(() => {
-                el.classList.add('avatar-padding-2');
-            }, 1000);  // 2 3
+            // setTimeout(() => {
+            //     el.classList.add('avatar-padding-2');
+            // }, 1000);  // 2 3
 
             setTimeout(() => {
                 this.chatMessages.forEach((message, index) => {
                     setTimeout(() => {
                         this.showChatBlue[index] = true;
+                        if (el) {
+                            el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                            el.style.opacity = '1'; // Убедитесь, что аватар виден
+                            el.style.transform = `translateY(${index * 110}px)`; // Перемещение вниз
+                        }
                     }, index * 1000);
                 });
             }, 0);
@@ -256,20 +261,27 @@ export default {
             this.clickedTap = true;
 
             let el = this.$refs.avatar;
-            el.classList.add('avatar-padding-3');
+            // el.classList.add('avatar-padding-3');
 
+            if (el) {
+                el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                el.style.opacity = '1'; // Убедитесь, что аватар виден
+                el.style.transform = `translateY(${3 * 120}px)`; // Перемещение вниз
+            }
             this.scrollToElement("scrollAnchor");
+            // this.scrollToElement("scrollAnchor1");
             this.showTap2 = false;
             this.finalMessageAdded = true;
             setTimeout(() => {
+
                 this.showRightThird = true;
-                this.scrollToElement("scrollAnchor1");
-            }, 3000);
+                this.scrollToElement("scrollAnchor4");
+            }, 1000);
             setTimeout(() => {
                 this.showLeftFourth = true;
                 this.scrollToElement("scrollAnchor2");
                 this.showButton = true;
-            }, 6000);
+            }, 3000);
         },
         goTo() {
             window.location.href = '/games/conveer';
@@ -358,6 +370,13 @@ export default {
             display: flex;
             justify-content: center;
             margin: 0 0 20px 0;
+            // opacity: 0;
+        }
+
+        &-bubble2 {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0 20px 0;
             // opacity: 0;
         }
 
@@ -475,7 +494,7 @@ export default {
 
 .right-text-2 {
     justify-content: flex-end;
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
 }
 
@@ -504,29 +523,29 @@ export default {
 }
 
 .show-right-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 
 .right-avatar-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 0.1s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
 }
 
 .right-text-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
 }
 
 .show-left-1 {
-    animation: fadeIn 1s ease-in forwards;
-    animation-delay: 2s;
+    animation: fadeIn 0.3s ease-in forwards;
+    animation-delay: 1s;
     opacity: 0;
 }
 
 .show-right-3 {
-    animation: fadeIn 1s ease-in forwards;
+    animation: fadeIn 0.3s ease-in forwards;
     animation-delay: 1s;
     opacity: 0;
 }

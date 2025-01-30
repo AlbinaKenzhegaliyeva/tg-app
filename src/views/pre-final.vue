@@ -5,7 +5,7 @@
             <img src="@/assets/open_eyes.png" alt="goose" class="gosha__img">
 
             <div class="gosha__dialog" v-show="showDialog">
-                <img src="@/assets/soz.svg" alt="dialog">
+                <img src="@/assets/dialog4.png" alt="dialog">
                 <div>
                     <span>Ты круто показал себя — справился <br> с высокими нагрузками и доставил <br> Коробчика.</span>
                     <span>
@@ -21,7 +21,7 @@
                     <img src="@/assets/op.svg" alt="go">
                 </div>
                 <div class="gosha__buttons_white" @click="goToFinal">
-                    <span>Перейти к призам</span>
+                    <span>Продолжить</span>
                     <img src="@/assets/dis.svg" alt="dis">
                 </div>
             </div>
