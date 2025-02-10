@@ -16,6 +16,16 @@
     align-items: center;
     gap: 100px;
 
+    @media (max-width: 1920px) {
+        height: 90vh;
+        border-radius: 29px 29px 0 0;
+    }
+
+    @media (max-width: 480px) {
+        height: 100vh;
+        border-radius: 0;
+    }
+
     .logo {
         margin: 150px 0 0 0;
     }

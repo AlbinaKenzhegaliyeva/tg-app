@@ -1,36 +1,43 @@
 <template>
-    <div class="page">
-        <TheHeaderChat />
-        <div class="chat">
-            <div class="chat__left chat__first">
-                <div class="chat__left-avatar">
-                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
-                </div>
-                <div class="chat__left-bubble">
-                    <TheChatBlue :isLast="true">
-                        <template #chattng__text>
-                            <div class="chat__left-bubble_inner">
-                                <span>Говорим «24/7», думаем о…</span>
-                            </div>
-                        </template>
-                    </TheChatBlue>
-                </div>
-            </div>
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
+        </div>
+        <div class="mobile-window">
+            <div class="page">
+                <TheHeaderChat />
+                <div class="chat">
+                    <div class="chat__left chat__first">
+                        <div class="chat__left-avatar">
+                            <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                        </div>
+                        <div class="chat__left-bubble">
+                            <TheChatBlue :isLast="true">
+                                <template #chattng__text>
+                                    <div class="chat__left-bubble_inner">
+                                        <span>Говорим «24/7», думаем о…</span>
+                                    </div>
+                                </template>
+                            </TheChatBlue>
+                        </div>
+                    </div>
 
-            <div class="chat__right show-right-1" v-show="showRight">
-                <div class="chat__right-bubble right-text-1">
-                    <TheChatWhite>
-                        <template #chattng__text>
-                            <span>Проджекте с вопросами о статусах по задачам?</span>
-                        </template>
-                    </TheChatWhite>
-                </div>
-                <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
-                </div>
-            </div>
+                    <div class="chat__right show-right-1" v-show="showRight">
+                        <div class="chat__right-bubble right-text-1">
+                            <TheChatWhite>
+                                <template #chattng__text>
+                                    <span>Проджекте с вопросами о статусах по задачам?</span>
+                                </template>
+                            </TheChatWhite>
+                        </div>
+                        <div class="chat__right-avatar right-avatar-1">
+                            <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
+                        </div>
+                    </div>
 
-            <!-- <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
+                    <!-- <div class="chat__note left-note" v-if="showNote" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
                     <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
@@ -40,44 +47,44 @@
                 </div>
             </div> -->
 
-            <div class="chat__left show-left-1" v-show="showLeftSecond">
-                <div class="chat__left-avatar avatar-1">
-                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
-                </div>
-                <div class="chat__left-bubble">
-                    <TheChatBlue :isLast="true">
-                        <template #chattng__text>
-                            <div class="chat__left-bubble_inner">
-                                <span>Вообще-то о конвейерной системе с автоматическими сортировщиками.
-                                    <br> Она отвечает за бесперебойную сборку и упаковку заказов.</span>
-                            </div>
-                        </template>
-                    </TheChatBlue>
-                </div>
-            </div>
+                    <div class="chat__left show-left-1" v-show="showLeftSecond">
+                        <div class="chat__left-avatar avatar-1">
+                            <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                        </div>
+                        <div class="chat__left-bubble">
+                            <TheChatBlue :isLast="true">
+                                <template #chattng__text>
+                                    <div class="chat__left-bubble_inner">
+                                        <span>Вообще-то о конвейерной системе с автоматическими сортировщиками.
+                                            <br> Она отвечает за бесперебойную сборку и упаковку заказов.</span>
+                                    </div>
+                                </template>
+                            </TheChatBlue>
+                        </div>
+                    </div>
 
-            <!-- <div class="tap" v-if="showTap">
+                    <!-- <div class="tap" v-if="showTap">
                 <img src="@/assets/tap.svg" alt="tap" @click="addNewChat">
             </div> -->
 
-            <div class="tap-container" v-if="showTap" @click="addNewChat">
-                <img src="@/assets/tap.svg" alt="tap" class="tap">
-            </div>
+                    <div class="tap-container" v-if="showTap" @click="addNewChat">
+                        <img src="@/assets/tap.svg" alt="tap" class="tap">
+                    </div>
 
-            <div class="chat__right show-right-1" v-show="showRightSecond">
-                <div class="chat__right-bubble right-text-2">
-                    <TheChatWhite>
-                        <template #chattng__text>
-                            <span>И Коробчиков?</span>
-                        </template>
-                    </TheChatWhite>
-                </div>
-                <div class="chat__right-avatar right-avatar-1">
-                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
-                </div>
-            </div>
+                    <div class="chat__right show-right-1" v-show="showRightSecond">
+                        <div class="chat__right-bubble right-text-2">
+                            <TheChatWhite>
+                                <template #chattng__text>
+                                    <span>И Коробчиков?</span>
+                                </template>
+                            </TheChatWhite>
+                        </div>
+                        <div class="chat__right-avatar right-avatar-1">
+                            <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
+                        </div>
+                    </div>
 
-            <!-- <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
+                    <!-- <div class="chat__note left-note" v-show="showNote2" @animationend="handleNoteAnimationEnd">
                 <div class="chat__note-avatar">
                     <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
                 </div>
@@ -87,73 +94,77 @@
                 </div>
             </div> -->
 
-            <div class="chat__left" v-show="showLeftThird">
-                <div ref="avatar">
-                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
-                </div>
-                <div class="chat__left-bubble">
-                    <TheChatBlue v-for="(message, index) in chatMessages" :key="index" v-show="showChatBlue[index]"
-                        :isLast="index === chatMessages.length - 1 && !finalMessageAdded">
-                        <template #chattng__text>
-                            <div class="chat__left-bubble_inner">
-                                <span>{{ message }}</span>
-                            </div>
-                        </template>
-                    </TheChatBlue>
-                    <TheChatBlue :isLast="true" v-if="clickedTap" class="chat_width">
-                        <template #chattng__text>
-                            <div class="chat__left-bubble_inner">
-                                <img src="@/assets/image.png" alt="img">
-                                <span>Коробчик, тебе сейчас предстоит то, <br> о чём мечтают все инженеры.</span>
-                            </div>
-                        </template>
-                    </TheChatBlue>
-                </div>
-            </div>
+                    <div class="chat__left" v-show="showLeftThird">
+                        <div ref="avatar">
+                            <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                        </div>
+                        <div class="chat__left-bubble">
+                            <TheChatBlue v-for="(message, index) in chatMessages" :key="index"
+                                v-show="showChatBlue[index]"
+                                :isLast="index === chatMessages.length - 1 && !finalMessageAdded">
+                                <template #chattng__text>
+                                    <div class="chat__left-bubble_inner">
+                                        <span>{{ message }}</span>
+                                    </div>
+                                </template>
+                            </TheChatBlue>
+                            <TheChatBlue :isLast="true" v-if="clickedTap" class="chat_width">
+                                <template #chattng__text>
+                                    <div class="chat__left-bubble_inner">
+                                        <img src="@/assets/image.png" alt="img">
+                                        <span>Коробчик, тебе сейчас предстоит то, <br> о чём мечтают все
+                                            инженеры.</span>
+                                    </div>
+                                </template>
+                            </TheChatBlue>
+                        </div>
+                    </div>
 
-            <!-- <div class="tap" v-if="showTap2">
+                    <!-- <div class="tap" v-if="showTap2">
                 <img src="@/assets/tap.svg" alt="tap" @click="addFinalChat">
             </div> -->
 
-            <div class="tap-container" v-if="showTap2" @click="addFinalChat">
-                <img src="@/assets/tap.svg" alt="tap" class="tap">
-            </div>
+                    <div class="tap-container" v-if="showTap2" @click="addFinalChat">
+                        <img src="@/assets/tap.svg" alt="tap" class="tap">
+                    </div>
 
-            <div ref="scrollAnchor"></div>
+                    <div ref="scrollAnchor"></div>
 
-            <div class="chat__right show-right-3" v-show="showRightThird">
-                <div class="chat__right-bubble2">
-                    <TheChatWhite>
-                        <template #chattng__text>
-                            <span>Стать CTO?!</span>
-                        </template>
-                    </TheChatWhite>
-                </div>
-                <div class="chat__right-avatar">
-                    <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
-                </div>
-            </div>
-            <div ref="scrollAnchor4"></div>
-            <div class="chat__left" v-show="showLeftFourth">
-                <div class="chat__left-avatar avatar-3">
-                    <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
-                </div>
-                <div class="chat__left-bubble left-text-4">
-                    <TheChatBlue :isLast="true">
-                        <template #chattng__text>
-                            <div class="chat__left-bubble_inner">
-                                <img src="@/assets/laydown.png" alt="img">
-                                <span>Нет, Коробчик, просто полежать.</span>
-                            </div>
-                        </template>
-                    </TheChatBlue>
-                </div>
-            </div>
+                    <div class="chat__right show-right-3" v-show="showRightThird">
+                        <div class="chat__right-bubble2">
+                            <TheChatWhite>
+                                <template #chattng__text>
+                                    <span>Стать CTO?!</span>
+                                </template>
+                            </TheChatWhite>
+                        </div>
+                        <div class="chat__right-avatar">
+                            <img src="@/assets/ava_b.png" alt="avatar" class="avatars">
+                        </div>
+                    </div>
+                    <div ref="scrollAnchor4"></div>
+                    <div class="chat__left" v-show="showLeftFourth">
+                        <div class="chat__left-avatar avatar-3">
+                            <img src="@/assets/ava_g.png" alt="avatar" class="avatars">
+                        </div>
+                        <div class="chat__left-bubble left-text-4">
+                            <TheChatBlue :isLast="true">
+                                <template #chattng__text>
+                                    <div class="chat__left-bubble_inner">
+                                        <img src="@/assets/laydown.png" alt="img">
+                                        <span>Нет, Коробчик, просто полежать.</span>
+                                    </div>
+                                </template>
+                            </TheChatBlue>
+                        </div>
+                    </div>
 
-            <div ref="scrollAnchor1"></div>
+                    <div ref="scrollAnchor1"></div>
 
-            <div ref="scrollAnchor2">
-                <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
+                    <div ref="scrollAnchor2">
+                        <button class="chat__button" v-if="showButton" @click="goTo">Начать игру</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -292,12 +303,96 @@ export default {
 
 
 <style lang="scss" scoped>
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
 .page {
     background-color: #02283E;
     background-image: url(@/assets/Vector.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+
+    @media (max-width: 19200px) {
+        height: 90vh;
+    }
+
+    @media (max-width: 800px) {
+        height: auto;
+    }
 }
 
 .chat {
@@ -305,6 +400,14 @@ export default {
     margin: 0 0 20px 0;
     height: 80vh;
     overflow: auto;
+
+    @media (max-width: 1920px) {
+        padding: 20px 7px 0;
+    }
+
+    @media (max-width: 800px) {
+        padding: 0 7px 50px;
+    }
 
     &__first {
         margin: 17px 0 0 0;
@@ -505,8 +608,17 @@ export default {
     animation: heartbeat 2s infinite;
     cursor: pointer;
 
+    @media (max-width: 1920px) {
+        right: 730px;
+    }
+
+    @media (max-width: 1440px) {
+        right: 550px;
+    }
+
     @media (max-width: 800px) {
         bottom: 10px;
+        right: 23px;
     }
 
     @media (max-width: 430px) {

@@ -1,64 +1,74 @@
 <template>
-    <div class="page">
-        <div class="header">
-            <img src="@/assets/logo2.svg" alt="logo">
-            <div class="header__menu">
-                <img src="@/assets/hamb.svg" alt="menu">
-                <span>Меню</span>
-            </div>
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
         </div>
+        <div class="mobile-window">
+            <div class="page">
+                <div class="header">
+                    <img src="@/assets/logo2.svg" alt="logo">
+                    <div class="header__menu">
+                        <img src="@/assets/hamb.svg" alt="menu">
+                        <span>Меню</span>
+                    </div>
+                </div>
 
-        <div class="header__menu_wrap" v-show="menu">
-            <div class="header__menu_overlay" @click="openMenu">
-                <img src="@/assets/hamb.svg" alt="menu">
-                <span>Меню</span>
-            </div>
-        </div>
+                <div class="header__menu_wrap" v-show="menu">
+                    <div class="header__menu_overlay" @click="openMenu">
+                        <img src="@/assets/hamb.svg" alt="menu">
+                        <span>Меню</span>
+                    </div>
+                </div>
 
-        <img src="@/assets/strelka.svg" alt="arrow" class="arrow" v-show="showArrow">
+                <img src="@/assets/strelka.svg" alt="arrow" class="arrow" v-show="showArrow">
 
-        <div class="text" v-show="showText">
-            <span>
-                Нажми сюда, чтобы запустить игру заново, посмотреть таблицу лидеров или открыть телеграм-канал Ozon
-                Tech.
-            </span>
-        </div>
+                <div class="text" v-show="showText">
+                    <span>
+                        Нажми сюда, чтобы запустить игру заново, посмотреть таблицу лидеров или открыть телеграм-канал
+                        Ozon
+                        Tech.
+                    </span>
+                </div>
 
-        <!-- <div class="tap" v-show="showTap" @click="goToFinal">
+                <!-- <div class="tap" v-show="showTap" @click="goToFinal">
             <img src="@/assets/tap.svg" alt="tap">
         </div> -->
 
-        <div class="tap-container" v-show="showTap" @click="goToFinal">
-            <img src="@/assets/tap.svg" alt="tap" class="tap">
-        </div>
-
-
-        <img src="@/assets/hello.png" alt="logo" class="goose">
-        <div class="button">
-            <span>Вакансии в Ozon Tech</span>
-            <img src="@/assets/op.svg" alt="go">
-        </div>
-    </div>
-
-    <TheMenu v-if="showMenu" @close="closeMenu">
-        <template #title></template>
-        <template #body>
-            <div class="menu">
-                <div @click="openChat">
-                    <img src="@/assets/reload.svg" alt="reload">
-                    <span>Сыграть ещё раз</span>
+                <div class="tap-container" v-show="showTap" @click="goToFinal">
+                    <img src="@/assets/tap.svg" alt="tap" class="tap">
                 </div>
-                <div @click="openLeaderboard">
-                    <img src="@/assets/coin.svg" alt="coin">
-                    <span>Открыть таблицу лидеров</span>
-                </div>
-                <div @click="openTelegram">
-                    <img src="@/assets/tg.svg" alt="tg">
-                    <span>Перейти в телеграм-канал Ozon Tech</span>
+
+
+                <img src="@/assets/hello.png" alt="logo" class="goose">
+                <div class="button">
+                    <span>Вакансии в Ozon Tech</span>
+                    <img src="@/assets/op.svg" alt="go">
                 </div>
             </div>
-        </template>
-    </TheMenu>
+
+            <TheMenu v-if="showMenu" @close="closeMenu">
+                <template #title></template>
+                <template #body>
+                    <div class="menu">
+                        <div @click="openChat">
+                            <img src="@/assets/reload.svg" alt="reload">
+                            <span>Сыграть ещё раз</span>
+                        </div>
+                        <div @click="openLeaderboard">
+                            <img src="@/assets/coin.svg" alt="coin">
+                            <span>Открыть таблицу лидеров</span>
+                        </div>
+                        <div @click="openTelegram">
+                            <img src="@/assets/tg.svg" alt="tg">
+                            <span>Перейти в телеграм-канал Ozon Tech</span>
+                        </div>
+                    </div>
+                </template>
+            </TheMenu>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -121,6 +131,107 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    &::before {
+        content: "";
+        position: fixed;
+        top: 90px;
+        left: 690px;
+        width: 539px;
+        height: 90vh;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 2;
+        border-radius: 29px 29px 0 0;
+
+        @media (max-width: 1440px) {
+            top: 80px;
+            left: 525px;
+            width: 390px;
+        }
+
+        @media (max-width: 480px) {
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            border-radius: 0;
+        }
+    }
+}
+
 .page {
     overflow: hidden;
     position: relative;
@@ -129,6 +240,14 @@ export default {
     background-image: url(@/assets/Vector.png);
     background-size: cover;
     padding: 0 17px;
+
+    @media (max-width: 1920px) {
+        height: 90vh;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+    }
 
     &::before {
         content: "";
@@ -139,6 +258,10 @@ export default {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.9);
         z-index: 2;
+
+        @media (max-width: 1920px) {
+            display: none;
+        }
     }
 
     .header {
@@ -164,6 +287,14 @@ export default {
     left: 0;
     right: 0;
 
+    @media (max-width: 1920px) {
+        position: static;
+    }
+
+    @media (max-width: 800px) {
+        position: fixed;
+    }
+
     &__menu {
         border-radius: 25px;
         padding: 6px 12px;
@@ -188,6 +319,14 @@ export default {
     position: absolute;
     bottom: 60px;
     left: 80px;
+
+    @media (max-width: 1920px) {
+        left: 150px;
+    }
+
+    @media (max-width: 1440px) {
+        left: 80px;
+    }
 
     @media (max-width: 800px) {
         left: 300px;
@@ -236,6 +375,16 @@ export default {
     right: 8px;
     padding: 13px 12px 13px 11px;
     background: #0a3956;
+
+    @media (max-width: 1920px) {
+        top: 5px;
+        right: 20px;
+    }
+
+    @media (max-width: 800px) {
+        top: 15px;
+        right: 8px;
+    }
 }
 
 .header__menu_overlay {
@@ -291,6 +440,18 @@ export default {
     right: 18px;
     animation: heartbeat 1s infinite;
     cursor: pointer;
+
+    @media (max-width: 1920px) {
+        right: 730px;
+    }
+
+    @media (max-width: 1440px) {
+        right: 550px;
+    }
+
+    @media (max-width: 800px) {
+        right: 18px;
+    }
 }
 
 .menu {

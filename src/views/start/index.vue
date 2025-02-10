@@ -1,62 +1,76 @@
 <template>
-    <TheLoader v-if="isLoading" />
-    <div class="greetings">
-        <img src="@/assets/back.png" alt="back" class="greetings__background">
-        <img src="@/assets/hello.png" alt="goose" class="greetings__gosha_begin first-goose">
-        <img src="@/assets/open_eyes.png" alt="goose" class="greetings__gosha_after second-goose" ref="secondGoose"
-            v-show="!goose && !smirk">
-        <div class="greetings__dialog" v-if="isVisible">
-            <img src="@/assets/dialog.png" alt="dialog" class="greetings__dialog-bubble">
-            <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
+
+    <div class="desktop-background">
+        <!-- <TheLoader v-if="isLoading" /> -->
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
         </div>
-        <div class="greetings__info" v-if="isVisible">
-            <span>Одним крылом он поддерживает высокие нагрузки, другим — здоровую атмосферу в команде.<br>Оптимист,
-                юморист и просто хороший <span class="crossed-text">человек</span> гусь!</span>
-        </div>
-        <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
-            @click="moveGoose" ref="btn">Привет!</button>
-        <!-- <img src="@/assets/smirkk.png" alt="goose" class="greetings__goose-smirk" v-show="smirk"> -->
-        <img src="@/assets/smirk_new.png" alt="goose" class="greetings__goose-smirk" v-show="smirk">
-        <!-- <img src="@/assets/Corobchik.svg" alt="box" class="greetings__corobchik" v-show="corobchik"> -->
-        <img src="@/assets/Corobchik_neww.png" alt="box" class="greetings__corobchik" v-show="corobchik">
-        <div class="greetings__about-korobchik" v-if="corobchikVisible">
-            <img src="@/assets/dialog2.png" alt="dialog" class="greetings__about-korobchik-bubble">
-            <div class="greetings__about-korobchik-text">
-                <span>А это Коробчик — подарок на день рождения и один из 6 100 000 ежедневных заказов на
-                    Ozon.</span>
-                <span>Над оперативностью доставки работают 6 000+ ИТ-специалистов в сложной системе с <br> 6 100
-                    микросервисами.</span>
+        <div class="mobile-window">
+            <div class="greetings">
+                <!-- <TheLoader v-if="isLoading" /> -->
+                <img src="@/assets/back.png" alt="back" class="greetings__background">
+                <img src="@/assets/hello.png" alt="goose" class="greetings__gosha_begin first-goose">
+                <img src="@/assets/open_eyes.png" alt="goose" class="greetings__gosha_after second-goose"
+                    ref="secondGoose" v-show="!goose && !smirk">
+                <div class="greetings__dialog" v-if="isVisible">
+                    <img src="@/assets/dialog.png" alt="dialog" class="greetings__dialog-bubble">
+                    <span>Привет! На связи Гоша — всесторонне одарённый инженер.</span>
+                </div>
+                <div class="greetings__info" v-if="isVisible">
+                    <span>Одним крылом он поддерживает высокие нагрузки, другим — здоровую атмосферу в
+                        команде.<br>Оптимист,
+                        юморист и просто хороший <span class="crossed-text">человек</span> гусь!</span>
+                </div>
+                <button class="greetings__btn-hello" v-if="isVisible" @mousedown="sayHello" @mouseup="resetStyle"
+                    @click="moveGoose" ref="btn">Привет!</button>
+                <!-- <img src="@/assets/smirkk.png" alt="goose" class="greetings__goose-smirk" v-show="smirk"> -->
+                <img src="@/assets/smirk_new.png" alt="goose" class="greetings__goose-smirk" v-show="smirk">
+                <!-- <img src="@/assets/Corobchik.svg" alt="box" class="greetings__corobchik" v-show="corobchik"> -->
+                <img src="@/assets/Corobchik_neww.png" alt="box" class="greetings__corobchik" v-show="corobchik">
+                <div class="greetings__about-korobchik" v-if="corobchikVisible">
+                    <img src="@/assets/dialog2.png" alt="dialog" class="greetings__about-korobchik-bubble">
+                    <div class="greetings__about-korobchik-text">
+                        <span>А это Коробчик — подарок на день рождения и один из 6 100 000 ежедневных заказов на
+                            Ozon.</span>
+                        <span>Над оперативностью доставки работают 6 000+ ИТ-специалистов в сложной системе с <br> 6 100
+                            микросервисами.</span>
+                    </div>
+                </div>
+                <button class="greetings__btn-korobchik" v-if="corobchikVisible" @mousedown="sayHello"
+                    @mouseup="resetStyle" @click="goToForm" ref="btn">Ого, сколько всего</button>
+                <img src="@/assets/open_eyes.png" alt="goose" class="third-goose" v-show="goose" ref="lastGoose">
+
+                <!-- <img src="@/assets/corob-hand.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand"> -->
+                <img src="@/assets/сorobchik-hand_new.png" alt="box" class="greetings__corobchik-hand"
+                    v-show="corobchik_hand">
+                <div class="greetings__gosha-corobchik" v-show="corobchik_hand">
+                    <span>С Гошей и Коробчиком познакомились, твоя очередь представиться.</span>
+                </div>
+                <div class="greetings__form-btn" v-show="corobchik_hand">
+                    <button @click="openForm">Заполнить данные</button>
+                    <div @click="openFormInfo">
+                        <img src="@/assets/in.svg" alt="info">
+                    </div>
+                </div>
+                <div class="greetings__form-bubble" v-show="clickInfo">
+                    <img src="@/assets/final-bubble.png" alt="dialog">
+                    <span>
+                        Мы собираем данные для формирования лидерборда и отправки подарков победителям, другие
+                        пользователи
+                        увидят только твой ник.
+                    </span>
+                </div>
+
+                <div class="greetings__order-korobchik" v-show="orderVisible">
+                    <img src="@/assets/text2.svg" alt="dialog" class="greetings__order-korobchik-bubble">
+                    <span>В этой игре тебе предстоит доставить Коробчика имениннику.</span>
+                </div>
+                <button class="greetings__btn-order-korobchik" v-show="orderVisible" @mousedown="sayHello"
+                    @mouseup="resetStyle" ref="btn" @click="goTo">Не терпится начать!</button>
             </div>
         </div>
-        <button class="greetings__btn-korobchik" v-if="corobchikVisible" @mousedown="sayHello" @mouseup="resetStyle"
-            @click="goToForm" ref="btn">Ого, сколько всего</button>
-        <img src="@/assets/open_eyes.png" alt="goose" class="third-goose" v-show="goose" ref="lastGoose">
-
-        <!-- <img src="@/assets/corob-hand.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand"> -->
-        <img src="@/assets/сorobchik-hand_new.png" alt="box" class="greetings__corobchik-hand" v-show="corobchik_hand">
-        <div class="greetings__gosha-corobchik" v-show="corobchik_hand">
-            <span>С Гошей и Коробчиком познакомились, твоя очередь представиться.</span>
-        </div>
-        <div class="greetings__form-btn" v-show="corobchik_hand">
-            <button @click="openForm">Заполнить данные</button>
-            <div @click="openFormInfo">
-                <img src="@/assets/in.svg" alt="info">
-            </div>
-        </div>
-        <div class="greetings__form-bubble" v-show="clickInfo">
-            <img src="@/assets/final-bubble.png" alt="dialog">
-            <span>
-                Мы собираем данные для формирования лидерборда и отправки подарков победителям, другие пользователи
-                увидят только твой ник.
-            </span>
-        </div>
-
-        <div class="greetings__order-korobchik" v-show="orderVisible">
-            <img src="@/assets/text2.svg" alt="dialog" class="greetings__order-korobchik-bubble">
-            <span>В этой игре тебе предстоит доставить Коробчика имениннику.</span>
-        </div>
-        <button class="greetings__btn-order-korobchik" v-show="orderVisible" @mousedown="sayHello" @mouseup="resetStyle"
-            ref="btn" @click="goTo">Не терпится начать!</button>
     </div>
 </template>
 
@@ -240,13 +254,95 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            top: 80px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
 .greetings {
     position: relative;
     overflow: hidden;
+    height: 90vh;
+
+    @media (max-width: 480px) {
+        height: auto;
+    }
 
     &__background {
         width: 100%;
-        height: 100vh;
+        height: 90vh;
+
+        @media (max-width: 480px) {
+            height: 100vh;
+        }
     }
 
     &__gosha_begin {
@@ -259,9 +355,24 @@ export default {
         transform: translateX(-50%) scale(1);
         transition: transform 3s ease-in-out;
 
+        @media (max-width: 1920px) {
+            left: 48%;
+            top: 15%;
+            right: 0;
+            transform: translateX(-50%) scale(0.9);
+        }
+
+        @media (max-width: 1440px) {
+            top: 23%;
+            right: 0;
+            transform: translateX(-50%) scale(1);
+        }
+
         @media (max-width: 800px) {
             top: 20%;
+            left: 50%;
             width: -webkit-fill-available;
+            transform: translateX(-50%) scale(1);
         }
 
         @media (max-width: 600px) {
@@ -296,6 +407,19 @@ export default {
         width: 100%;
         transform: translateX(-47.5%) scale(1.32);
         transition: transform 3s ease-in-out;
+
+        @media (max-width: 1920px) {
+            top: 17%;
+            transform: translateX(-47.5%) scale(1.2);
+        }
+
+        @media (max-width: 1440px) {
+            left: 50%;
+            top: 26%;
+            right: 0;
+            bottom: 0;
+            transform: translateX(-47.5%) scale(1.32);
+        }
 
         @media (max-width: 800px) {
             top: 23%;
@@ -365,6 +489,10 @@ export default {
         &-bubble {
             max-width: 100%;
 
+            @media (max-width: 1920px) {
+                width: 539px;
+            }
+
             @media (max-width: 800px) {
                 width: 450px;
             }
@@ -387,6 +515,16 @@ export default {
             font-weight: 400;
             font-size: 20px;
             color: #073049;
+
+            @media (max-width: 1920px) {
+                top: 30px;
+                font-size: 29px;
+            }
+
+            @media (max-width: 1440px) {
+                top: 25px;
+                font-size: 20px;
+            }
 
             @media (max-width: 800px) {
                 top: 30px;
@@ -454,6 +592,14 @@ export default {
             font-weight: 400;
             font-size: 14px;
             color: #fff;
+
+            @media (max-width: 1920px) {
+                font-size: 20px;
+            }
+
+            @media (max-width: 1440px) {
+                font-size: 14px;
+            }
         }
 
         .crossed-text {
@@ -493,6 +639,14 @@ export default {
         animation: fadeIn 1s forwards;
         animation-delay: 6.5s;
 
+        @media (max-width: 1920px) {
+            font-size: 29px;
+        }
+
+        @media (max-width: 1440px) {
+            font-size: 20px;
+        }
+
         @media (max-width: 430px) {
             bottom: 70px;
         }
@@ -518,6 +672,16 @@ export default {
         animation: fadeIn 1s forwards; //here
         animation-delay: 0s;
         width: 219px;
+
+        @media (max-width: 1920px) {
+            left: 8%;
+            top: 52%;
+        }
+
+        @media (max-width: 1440px) {
+            left: 0;
+            top: 51%;
+        }
 
         @media (max-width: 800px) {
             top: 55%;
@@ -556,6 +720,17 @@ export default {
         top: 20px;
         right: -10px;
 
+
+        @media (max-width: 1920px) {
+            right: 30px;
+            top: 70px;
+        }
+
+        @media (max-width: 1440px) {
+            right: 0;
+            top: 20px;
+        }
+
         @media (max-width: 800px) {
             right: 150px;
             top: 0;
@@ -586,6 +761,12 @@ export default {
             top: 0;
             left: 0;
             right: 0;
+
+            @media (max-width: 1920px) {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+            }
 
             @media (max-width: 800px) {
                 top: 20px;
@@ -622,6 +803,14 @@ export default {
         opacity: 0;
         animation: fadeIn 1s forwards;
         animation-delay: 1s;
+
+        @media (max-width: 1920px) {
+            font-size: 29px;
+        }
+
+        @media (max-width: 1440px) {
+            font-size: 20px;
+        }
 
         @media (max-width: 430px) {
             bottom: 50px;
@@ -758,6 +947,16 @@ export default {
         animation-delay: 0s;
         width: 219px;
 
+        @media (max-width: 1920px) {
+            top: 52%;
+            left: 7%;
+        }
+
+        @media (max-width: 1440px) {
+            top: 52%;
+            left: -10px;
+        }
+
         @media (max-width: 800px) {
             top: 55%;
             left: 25%;
@@ -833,6 +1032,14 @@ export default {
             white-space: nowrap;
             width: 100%;
             cursor: pointer;
+
+            @media (max-width: 1920px) {
+                font-size: 29px;
+            }
+
+            @media (max-width: 1440px) {
+                font-size: 20px;
+            }
         }
 
         div {
@@ -840,6 +1047,18 @@ export default {
             padding: 9px;
             box-shadow: 0 4px 0 0 #054fd4;
             background: #005bff;
+
+            @media (max-width: 1920px) {
+                padding: 15px;
+            }
+
+            @media (max-width: 1440px) {
+                padding: 11px 11px 11px 13px;
+            }
+
+            @media (max-width: 800px) {
+                padding: 9px;
+            }
         }
     }
 
@@ -866,6 +1085,10 @@ export default {
             font-size: 14px;
             color: #073049;
 
+            @media (max-width: 1920px) {
+                left: 20px;
+            }
+
             @media (max-width: 800px) {
                 left: 20px;
             }
@@ -881,6 +1104,16 @@ export default {
         animation: fadeIn 1s forwards;
         animation-delay: 0s;
         width: 334px;
+
+        @media (max-width: 1920px) {
+            top: 21%;
+            left: 37%;
+        }
+
+        @media (max-width: 1440px) {
+            top: 15%;
+            left: 35%;
+        }
 
         @media (max-width: 800px) {
             left: 46%;
@@ -985,6 +1218,16 @@ export default {
     width: 360px;
     animation: fadeIn 0.5s forwards; //here
 
+    @media (max-width: 1920px) {
+        top: 21%;
+        left: 35%;
+    }
+
+    @media (max-width: 1440px) {
+        top: 15%;
+        left: 33%;
+    }
+
     @media (max-width: 800px) {
         top: calc(40% - 180px);
         left: 46%;
@@ -1025,6 +1268,14 @@ export default {
     transform: translate(-22.5%, -27%) scale(0.9);
     opacity: 1;
     animation-duration: 1s;
+
+    @media (max-width: 1920px) {
+        transform: translate(-34%, -9%) scale(0.7);
+    }
+
+    @media (max-width: 1440px) {
+        transform: translate(-22%, -15%) scale(0.85);
+    }
 
     @media (max-width: 800px) {
         transform: translate(-14%, -18%) scale(0.9);

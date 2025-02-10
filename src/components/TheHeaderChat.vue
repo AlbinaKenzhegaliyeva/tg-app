@@ -29,10 +29,14 @@ export default {
   background: #0a3956;
   padding: 16px 0 16px 13px;
   z-index: 10000;
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0; 
+  right: 0;
+
+  @media (max-width: 1920px) {
+    position: static;
+  }
 
   &__inner {
     display: flex;

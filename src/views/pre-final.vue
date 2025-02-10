@@ -1,31 +1,43 @@
 <template>
-    <TheLoader v-if="isLoading" />
-    <div class="page">
-        <div class="gosha">
-            <img src="@/assets/open_eyes.png" alt="goose" class="gosha__img">
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
+        </div>
+        <div class="mobile-window">
+            <!-- <TheLoader v-if="isLoading" /> --> 
+            <div class="page">
+                <div class="gosha">
+                    <!-- <TheLoader v-if="isLoading" /> -->
+                    <img src="@/assets/open_eyes.png" alt="goose" class="gosha__img">
 
-            <div class="gosha__dialog" v-show="showDialog">
-                <img src="@/assets/dialog4.png" alt="dialog">
-                <div>
-                    <span>Ты круто показал себя — справился <br> с высокими нагрузками и доставил <br> Коробчика.</span>
-                    <span>
-                        Если хочешь работать над решениями, которыми пользуются миллионы, смотри вакансии на нашем
-                        сайте.
-                    </span>
+                    <div class="gosha__dialog" v-show="showDialog">
+                        <img src="@/assets/dialog4.png" alt="dialog">
+                        <div>
+                            <span>Ты круто показал себя — справился <br> с высокими нагрузками и доставил <br>
+                                Коробчика.</span>
+                            <span>
+                                Если хочешь работать над решениями, которыми пользуются миллионы, смотри вакансии на
+                                нашем
+                                сайте.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="gosha__buttons">
+                        <div class="gosha__buttons_blue" @click="openVacancies">
+                            <span>Вакансии в Ozon Tech</span>
+                            <img src="@/assets/op.svg" alt="go">
+                        </div>
+                        <div class="gosha__buttons_white" @click="goToFinal">
+                            <span>Продолжить</span>
+                            <img src="@/assets/dis.svg" alt="dis">
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="gosha__buttons">
-                <div class="gosha__buttons_blue" @click="openVacancies">
-                    <span>Вакансии в Ozon Tech</span>
-                    <img src="@/assets/op.svg" alt="go">
-                </div>
-                <div class="gosha__buttons_white" @click="goToFinal">
-                    <span>Продолжить</span>
-                    <img src="@/assets/dis.svg" alt="dis">
-                </div>
-            </div>
-
         </div>
     </div>
 </template>
@@ -143,6 +155,81 @@ export default {
 </script>
 
 <style lang="scss">
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
 .page {
     overflow: hidden;
     position: relative;
@@ -154,11 +241,31 @@ export default {
     width: 100%;
     height: 100vh;
 
+    @media (max-width: 1920px) {
+        height: 90vh;
+        background-size: contain;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+        background-size: cover;
+    }
+
     &__img {
         width: 100%;
         position: absolute;
         bottom: -70px;
         left: -90px;
+
+        @media (max-width: 1920px) {
+            bottom: -90px;
+            left: -130px;
+        }
+
+        @media (max-width: 1440px) {
+            bottom: -70px;
+            left: -90px;
+        }
 
         @media (max-width: 800px) {
             width: 400px;
@@ -174,6 +281,16 @@ export default {
         position: absolute;
         top: 200px;
         left: 5px;
+
+        @media (max-width: 1920px) {
+            top: 60px;
+            left: 40px;
+        }
+
+        @media (max-width: 1440px) {
+            top: 100px;
+            left: 0;
+        }
 
         @media (max-width: 800px) {
             top: 10px;
@@ -210,6 +327,15 @@ export default {
         }
 
         img {
+
+            @media (max-width: 1920px) {
+                width: 460px;
+            }
+
+            @media (max-width: 1440px) {
+                width: auto;
+            }
+
             @media (max-width: 420px) {
                 width: 420px;
             }
@@ -241,6 +367,14 @@ export default {
                 font-weight: 400;
                 font-size: 16px;
                 color: #073049;
+
+                @media (max-width: 1920px) {
+                    font-size: 20px;
+                }
+
+                @media (max-width: 1440px) {
+                    font-size: 16px;
+                }
             }
         }
     }

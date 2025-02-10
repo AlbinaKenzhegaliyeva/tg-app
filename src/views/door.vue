@@ -1,29 +1,40 @@
 <template>
-    <TheLoader v-if="isLoading" />
-    <div class="page">
-        <img src="@/assets/door_back.png" alt="background" class="background" v-show="showBackground">
-        <div class="door" ref="door">
-            <img src="@/assets/door.png" alt="door" class="door-back" v-show="showDoor">
-            <img src="@/assets/open_eyes.png" alt="together" class="door-gosha" v-show="showCharacters">
-            <img src="@/assets/Corobchik.png" alt="box" class="door-corobchik" v-show="showCharacters">
-            <div class="door__dialog" v-if="showMsg">
-                <img src="@/assets/fignya1.png" alt="text" class="door__dialog-bubble">
-                <span>О, мы как раз вовремя!</span>
-            </div>
-            <img src="@/assets/flag.png" alt="flag" v-show="showFlag" class="flag">
-            <img src="@/assets/all_new.png" alt="together" v-show="showFinalCharacters" class="final-characters">
-            <div class="lizard__dialog" v-show="showMsg2">
-                <img src="@/assets/place.png" alt="text" class="lizard__dialog-bubble">
-                <span>Ура, спасибо за подарки!</span>
-            </div>
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
+        </div>
+        <div class="mobile-window">
+            <!-- <TheLoader v-if="isLoading" /> -->
+            <div class="page">
+                <img src="@/assets/door_back.png" alt="background" class="background" v-show="showBackground">
+                <div class="door" ref="door">
+                    <!-- <TheLoader v-if="isLoading" /> -->
+                    <img src="@/assets/door.png" alt="door" class="door-back" v-show="showDoor">
+                    <img src="@/assets/open_eyes.png" alt="together" class="door-gosha" v-show="showCharacters">
+                    <img src="@/assets/Corobchik.png" alt="box" class="door-corobchik" v-show="showCharacters">
+                    <div class="door__dialog" v-if="showMsg">
+                        <img src="@/assets/fignya1.png" alt="text" class="door__dialog-bubble">
+                        <span>О, мы как раз вовремя!</span>
+                    </div>
+                    <img src="@/assets/flag.png" alt="flag" v-show="showFlag" class="flag">
+                    <img src="@/assets/all_new.png" alt="together" v-show="showFinalCharacters"
+                        class="final-characters">
+                    <div class="lizard__dialog" v-show="showMsg2">
+                        <img src="@/assets/place.png" alt="text" class="lizard__dialog-bubble">
+                        <span>Ура, спасибо за подарки!</span>
+                    </div>
 
-            <div class="points" v-show="showPoints">
-                <p>Набранные баллы:</p>
-                <span>1142</span>
-            </div>
+                    <div class="points" v-show="showPoints">
+                        <p>Набранные баллы:</p>
+                        <span>1142</span>
+                    </div>
 
-            <div v-show="showBtn">
-                <button @click="goToPreFinal">Было интересно!</button>
+                    <div v-show="showBtn">
+                        <button @click="goToPreFinal">Было интересно!</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -93,6 +104,82 @@ export default {
 </script>
 
 <style lang="scss">
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
 .page {
     position: relative;
     overflow: hidden;
@@ -104,6 +191,14 @@ export default {
     width: 100%;
     height: 100%;
     z-index: -1;
+
+    @media (max-width: 1920px) {
+        z-index: 1;
+    }
+
+    @media (max-width: 800px) {
+        z-index: -1;
+    }
 }
 
 .door {
@@ -114,11 +209,29 @@ export default {
     background-position: center;
     background-attachment: fixed;
 
+    @media (max-width: 1920px) {
+        height: 90vh;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+    }
+
     &-back {
         position: absolute;
         bottom: 0;
         width: 100%;
         z-index: 1;
+
+        @media (max-width: 1920px) {
+            height: 780px;
+        }
+
+        @media (max-width: 1440px) {
+            left: 0;
+            height: auto;
+            width: 100%;
+        }
 
         @media (max-width: 800px) {
             height: -webkit-fill-available;
@@ -156,6 +269,16 @@ export default {
         animation: fadeIn 1s forwards;
         opacity: 0;
 
+        @media (max-width: 1920px) {
+            bottom: -100px;
+            left: -120px;
+        }
+
+        @media (max-width: 1440px) {
+            bottom: -70px;
+            left: -100px;
+        }
+
         @media (max-width: 800px) {
             width: 350px;
             left: 20%;
@@ -180,6 +303,14 @@ export default {
         width: 262px;
         animation: fadeIn 1s forwards;
         opacity: 0;
+
+        @media (max-width: 1920px) {
+            width: 320px;
+        }
+
+        @media (max-width: 1440px) {
+            width: 262px;
+        }
 
         @media (max-width: 800px) {
             width: 250px;
@@ -208,6 +339,16 @@ export default {
             top: 250px;
             left: 90px;
             z-index: 100;
+
+            @media (max-width: 1920px) {
+                top: 200px;
+                left: 150px;
+            }
+
+            @media (max-width: 1440px) {
+                top: 200px;
+                left: 90px;
+            }
 
             @media (max-width: 800px) {
                 top: 100px;
@@ -252,6 +393,16 @@ export default {
             left: 115px;
             z-index: 101;
 
+            @media (max-width: 1920px) {
+                top: 225px;
+                left: 175px;
+            }
+
+            @media (max-width: 1440px) {
+                top: 220px;
+                left: 115px;
+            }
+
             @media (max-width: 800px) {
                 top: 120px;
                 left: 320px;
@@ -290,8 +441,14 @@ export default {
         &.flag {
             width: 100%;
 
+            @media (max-width: 1920px) {
+                z-index: 100;
+                position: absolute;
+            }
+
             @media (max-width: 800px) {
                 height: 427px;
+                position: static;
             }
 
             @media (max-width: 430px) {
@@ -317,6 +474,18 @@ export default {
             opacity: 0;
             z-index: 100;
             animation: slideUp 1s forwards;
+
+            @media (max-width: 1920px) {
+                width: 650px;
+                left: -80px;
+                top: 380px;
+            }
+
+            @media (max-width: 1440px) {
+                width: 575px;
+                left: -100px;
+                top: 300px;
+            }
 
             @media (max-width: 800px) {
                 width: 500px;
@@ -361,6 +530,17 @@ export default {
             position: absolute;
             top: -80px;
 
+            @media (max-width: 1920px) {
+                top: 450px;
+                left: 50px;
+                z-index: 100;
+            }
+
+            @media (max-width: 1440px) {
+                top: -80px;
+                left: 0;
+            }
+
             @media (max-width: 800px) {
                 top: -160px;
                 left: 210px;
@@ -404,9 +584,15 @@ export default {
             top: -60px;
             left: 15px;
 
-            @media (max-width: 800px) {
-                top: -140px;
-                left: 220px;
+            @media (max-width: 1920px) {
+                top: 470px;
+                left: 65px;
+                z-index: 100;
+            }
+
+            @media (max-width: 1440px) {
+                top: -60px;
+                left: 20px;
             }
 
             @media (max-width: 600px) {
@@ -448,6 +634,16 @@ export default {
         text-align: center;
         opacity: 0;
         animation: slideDown 0.8s forwards;
+
+        @media (max-width: 1920px) {
+            top: 160px;
+            left: 15%;
+            z-index: 100;
+        }
+
+        @media (max-width: 1440px) {
+            left: 1%;
+        }
 
         @media (max-width: 800px) {
             animation: slideDownBigScreen 0.8s forwards;

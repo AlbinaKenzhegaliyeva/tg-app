@@ -1,52 +1,62 @@
 <template>
-    <div class="page">
-        <div class="header">
-            <img src="@/assets/logo2.svg" alt="logo">
-            <div class="header__menu" @click="openMenu">
-                <img src="@/assets/hamb.svg" alt="menu">
-                <span>Меню</span>
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
+        </div>
+        <div class="mobile-window">
+            <div class="page">
+                <div class="header">
+                    <img src="@/assets/logo2.svg" alt="logo">
+                    <div class="header__menu" @click="openMenu">
+                        <img src="@/assets/hamb.svg" alt="menu">
+                        <span>Меню</span>
+                    </div>
+                </div>
+
+                <div class="text" v-show="showText">
+                    <span>
+                        Поздравляем, игра пройдена!
+                    </span>
+                    <span>
+                        Чтобы участвовать в розыгрыше, осталось только подписаться на телеграм Ozon Tech. Там много
+                        полезного и
+                        немного смешного.
+                    </span>
+                    <span>
+                        А ещё у нашего бота есть статьи про упомянутые <br> в игре решения.
+                    </span>
+                </div>
+
+                <img src="@/assets/hello.png" alt="logo" class="goose">
+                <div class="button" @click="openVacancies">
+                    <span>Вакансии в Ozon Tech</span>
+                    <img src="@/assets/op.svg" alt="go">
+                </div>
             </div>
-        </div>
 
-        <div class="text" v-show="showText">
-            <span>
-                Поздравляем, игра пройдена!
-            </span>
-            <span>
-                Чтобы участвовать в розыгрыше, осталось только подписаться на телеграм Ozon Tech. Там много полезного и
-                немного смешного.
-            </span>
-            <span>
-                А ещё у нашего бота есть статьи про упомянутые <br> в игре решения.
-            </span>
-        </div>
-
-        <img src="@/assets/hello.png" alt="logo" class="goose">
-        <div class="button" @click="openVacancies">
-            <span>Вакансии в Ozon Tech</span>
-            <img src="@/assets/op.svg" alt="go">
+            <TheMenu v-if="showMenu" @close="showMenu = false">
+                <template #title></template>
+                <template #body>
+                    <div class="menu">
+                        <div @click="openChat">
+                            <img src="@/assets/reload.svg" alt="reload">
+                            <span>Сыграть ещё раз</span>
+                        </div>
+                        <div @click="openLeaderboard">
+                            <img src="@/assets/coin.svg" alt="coin">
+                            <span>Открыть таблицу лидеров</span>
+                        </div>
+                        <div @click="openTelegram">
+                            <img src="@/assets/tg.svg" alt="tg">
+                            <span>Перейти в телеграм-канал Ozon Tech</span>
+                        </div>
+                    </div>
+                </template>
+            </TheMenu>
         </div>
     </div>
-
-    <TheMenu v-if="showMenu" @close="showMenu = false">
-        <template #title></template>
-        <template #body>
-            <div class="menu">
-                <div @click="openChat">
-                    <img src="@/assets/reload.svg" alt="reload">
-                    <span>Сыграть ещё раз</span>
-                </div>
-                <div @click="openLeaderboard">
-                    <img src="@/assets/coin.svg" alt="coin">
-                    <span>Открыть таблицу лидеров</span>
-                </div>
-                <div @click="openTelegram">
-                    <img src="@/assets/tg.svg" alt="tg">
-                    <span>Перейти в телеграм-канал Ozon Tech</span>
-                </div>
-            </div>
-        </template>
-    </TheMenu>
 </template>
 
 <script>
@@ -176,6 +186,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
 .page {
     overflow: hidden;
     position: relative;
@@ -184,6 +269,14 @@ export default {
     background-image: url(@/assets/Vector.png);
     background-size: cover;
     padding: 0 17px;
+
+    @media (max-width: 1920px) {
+        height: 90vh;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+    }
 }
 
 .header {
@@ -198,6 +291,16 @@ export default {
     top: 0;
     left: 0;
     right: 0;
+
+    @media (max-width: 1920px) {
+        position: static;
+        margin: 0 -17px;
+    }
+
+    @media (max-width: 800px) {
+        position: fixed;
+        margin: 0;
+    }
 
     &__menu {
         border-radius: 25px;
@@ -223,6 +326,16 @@ export default {
     position: absolute;
     bottom: 60px;
     left: 80px;
+
+    @media (max-width: 1920px) {
+        bottom: 60px;
+        left: 150px;
+    }
+
+    @media (max-width: 1440px) {
+        bottom: 60px;
+        left: 80px;
+    }
 
     @media (max-width: 800px) {
         left: 300px;
@@ -284,6 +397,14 @@ export default {
     opacity: 0;
     animation: slideDown 1s forwards;
 
+    @media (max-width: 1920px) {
+        animation: slideDownDesktop 1s forwards;
+    }
+
+    @media (max-width: 800px) {
+        animation: slideDown 1s forwards;
+    }
+
     span {
         font-family: var(--gte);
         font-weight: 400;
@@ -321,6 +442,18 @@ export default {
 
     100% {
         margin: 120px 0 0 0;
+        opacity: 1;
+    }
+}
+
+@keyframes slideDownDesktop {
+    0% {
+        opacity: 0;
+        margin: 50px 0 0 0;
+    }
+
+    100% {
+        margin: 50px 0 0 0;
         opacity: 1;
     }
 }

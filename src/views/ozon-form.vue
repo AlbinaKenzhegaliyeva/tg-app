@@ -1,13 +1,22 @@
 <template>
-  <div class="header">
-    <img src="@/assets/arr.svg" class="header__back" v-if="!showBtn" @click="goBack">
-    <img src="@/assets/logo-ozon.svg" class="header__logo">
-  </div>
+  <div class="desktop-background">
+    <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+    <div class="tg-desktop">
+      <span>Телеграм-канал</span>
+      <img src="@/assets/tg-d.svg" alt="tg">
+    </div>
+    <div class="mobile-window">
+      <div class="header">
+        <img src="@/assets/arr.svg" class="header__back" v-if="!showBtn" @click="goBack">
+        <img src="@/assets/logo-ozon.svg" class="header__logo">
+      </div>
 
-  <div class="content">
-    <iframe id="ozon-form" src="https://forms.ozon.ru/form/149237e97f3389bab857dc4d8b209d1efa?embed=true"
-      ref="ozonForm"></iframe>
-    <button v-if="showBtn" @click="goToGame">Продолжить</button>
+      <div class="content">
+        <iframe id="ozon-form" src="https://forms.ozon.tech/form/149237e97f3389bab857dc4d8b209d1efa?embed=true"
+          ref="ozonForm"></iframe>
+        <button v-if="showBtn" @click="goToGame">Продолжить</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -61,7 +70,7 @@ export default {
         }, '*');
         iframe.contentWindow.postMessage({
           event: 'ozon-forms:utm-marks-message',
-          utmContent: uuid, 
+          utmContent: uuid,
           utmSource: 'ozonhrbot',
         }, '*');
       } else {
@@ -151,6 +160,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.desktop-background {
+  background: url('@/assets/bgg.svg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  height: 100vh;
+
+  @media (max-width: 480px) {
+    background: none;
+  }
+
+  .logo-desktop {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+
+    @media (max-width: 1440px) {
+      top: 80px;
+    }
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  .tg-desktop {
+    position: absolute;
+    left: 100px;
+    bottom: 50px;
+    border-radius: 31px;
+    padding: 13px 25px;
+    background: #005bff;
+    display: flex;
+    gap: 13px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    @media (max-width: 1440px) {
+      bottom: 30px;
+    }
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+
+    span {
+      font-family: var(--gte);
+      font-weight: 400;
+      font-size: 23px;
+      color: #fff;
+    }
+  }
+}
+
+.mobile-window {
+  width: 539px;
+  // height: 90vh;
+  position: relative;
+  overflow: hidden;
+  border-radius: 29px 29px 0 0;
+  box-shadow: 0 0 14px 0 #032b44;
+
+  @media (max-width: 1440px) {
+    width: 390px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
 .header {
   background-color: #F9FAFC;
   display: flex;
@@ -176,13 +260,17 @@ export default {
   justify-content: flex-start;
   position: relative;
   background-color: #fff;
-  height: 100vh;
+ // height: 100vh;
 
   iframe {
     border: none;
     width: 100%;
-    height: 90vh;
+    height: 80vh;
     z-index: 0;
+
+    @media (max-width: 480px) {
+      height: 90vh;
+    }
   }
 
   button {

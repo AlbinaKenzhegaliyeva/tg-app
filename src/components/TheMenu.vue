@@ -45,6 +45,26 @@ export default {
     justify-content: flex-end;
     padding: 20px 0 0;
 
+    @media (max-width: 1920px) {
+        height: 90vh;
+        width: 539px;
+        padding: 0;
+        border-radius: 29px 29px 0 0;
+    }
+
+    @media (max-width: 1440px) {
+        height: 88vh;
+        width: 390px;
+        padding: 20px 0 0;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+        width: 100%;
+        padding: 20px 0 0;
+        border-radius: 0;
+    }
+
     .popup__block {
         border-radius: 20px 20px 0px 0px;
         background: #0a3956;

@@ -1,63 +1,70 @@
 <template>
-    <div class="page">
-        <div class="header">
-            <div class="header__logo-back">
-                <img src="@/assets/znak.svg" alt="symbol" @click="goBack">
+    <div class="desktop-background">
+        <img src="@/assets/logo_desktop.png" alt="logo" class="logo-desktop">
+        <div class="tg-desktop">
+            <span>Телеграм-канал</span>
+            <img src="@/assets/tg-d.svg" alt="tg">
+        </div>
+        <div class="mobile-window">
+            <div class="page">
+                <div class="header">
+                    <div class="header__logo-back">
+                        <img src="@/assets/znak.svg" alt="symbol" @click="goBack">
 
-                <div class="header__logo">
-                    <img src="@/assets/brace.svg" alt="logo">
-                    <div class="header__logo-text">
-                        <div>
-                            <span>Ozon Tech</span>
-                            <img src="@/assets/galka.svg" alt="item">
+                        <div class="header__logo">
+                            <img src="@/assets/brace.svg" alt="logo">
+                            <div class="header__logo-text">
+                                <div>
+                                    <span>Ozon Tech</span>
+                                    <img src="@/assets/galka.svg" alt="item">
+                                </div>
+                                <span>Таблица лидеров</span>
+                            </div>
                         </div>
-                        <span>Таблица лидеров</span>
+                    </div>
+                    <div class="header__menu" @click="openMenu">
+                        <img src="@/assets/hamb.svg" alt="menu">
+                        <span>Меню</span>
                     </div>
                 </div>
-            </div>
-            <div class="header__menu" @click="openMenu">
-                <img src="@/assets/hamb.svg" alt="menu">
-                <span>Меню</span>
-            </div>
-        </div>
 
-        <div class="leaders-top">
-            <div class="leader">
-                <img src="@/assets/2.svg" alt="2">
-                <div>
-                    <p>{{ second_leader }}</p>
-                    <span>{{ second_leader_points }}</span>
-                </div>
-            </div>
-            <div class="leader first-place">
-                <img src="@/assets/1.svg" alt="1">
-                <div>
-                    <p>{{ first_leader }}</p>
-                    <span>{{ first_leader_points }}</span>
-                </div>
-            </div>
-            <div class="leader">
-                <img src="@/assets/3.svg" alt="3">
-                <div>
-                    <p>{{ third_leader }}</p>
-                    <span>{{ third_leader_points }}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="leaders-list">
-            <div class="leaders-list__item" v-for="(leader, index) in leaders.slice(3)" :key="index + 3">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>{{ index + 4 }}</p>
-                        <img src="@/assets/4.svg" alt="avatar">
+                <div class="leaders-top">
+                    <div class="leader">
+                        <img src="@/assets/2.svg" alt="2">
+                        <div>
+                            <p>{{ second_leader }}</p>
+                            <span>{{ second_leader_points }}</span>
+                        </div>
                     </div>
-                    <span>{{ leader.username }}</span>
+                    <div class="leader first-place">
+                        <img src="@/assets/1.svg" alt="1">
+                        <div>
+                            <p>{{ first_leader }}</p>
+                            <span>{{ first_leader_points }}</span>
+                        </div>
+                    </div>
+                    <div class="leader">
+                        <img src="@/assets/3.svg" alt="3">
+                        <div>
+                            <p>{{ third_leader }}</p>
+                            <span>{{ third_leader_points }}</span>
+                        </div>
+                    </div>
                 </div>
-                <span>{{ leader.totalPoints }}</span>
-            </div>
 
-            <!-- <div class="leaders-list__item">
+                <div class="leaders-list">
+                    <div class="leaders-list__item" v-for="(leader, index) in leaders.slice(3)" :key="index + 3">
+                        <div class="leaders-list__item-inner">
+                            <div>
+                                <p>{{ index + 4 }}</p>
+                                <img src="@/assets/4.svg" alt="avatar">
+                            </div>
+                            <span>{{ leader.username }}</span>
+                        </div>
+                        <span>{{ leader.totalPoints }}</span>
+                    </div>
+
+                    <!-- <div class="leaders-list__item">
                 <div class="leaders-list__item-inner">
                     <div>
                         <p>19</p>
@@ -67,7 +74,7 @@
                 </div>
                 <span>999</span>
             </div> -->
-            <!-- <div class="leaders-list__item">
+                    <!-- <div class="leaders-list__item">
                 <div class="leaders-list__item-inner">
                     <div>
                         <p>20</p>
@@ -78,39 +85,41 @@
                 <span>999</span>
             </div> -->
 
-            <div v-if="isHiddenElementVisible" class="user-fixed" id="user-place1">
-                <div class="leaders-list__item-inner">
-                    <div>
-                        <p>{{ userPlaceNumber }}</p>
-                        <img src="@/assets/last.svg" alt="avatar">
-                    </div>
-                    <span>{{ currentLeader.username }}</span>
+                    <div v-if="isHiddenElementVisible" class="user-fixed" id="user-place1">
+                        <div class="leaders-list__item-inner">
+                            <div>
+                                <p>{{ userPlaceNumber }}</p>
+                                <img src="@/assets/last.svg" alt="avatar">
+                            </div>
+                            <span>{{ currentLeader.username }}</span>
 
+                        </div>
+                        <span>{{ currentLeader.points }}</span>
+                    </div>
                 </div>
-                <span>{{ currentLeader.points }}</span>
             </div>
+
+            <TheMenu v-if="showMenu" @close="showMenu = false">
+                <template #title></template>
+                <template #body>
+                    <div class="menu">
+                        <div @click="openChat">
+                            <img src="@/assets/reload.svg" alt="reload">
+                            <span>Сыграть ещё раз</span>
+                        </div>
+                        <div @click="openVacancies">
+                            <img src="@/assets/op.svg" alt="item">
+                            <span>Вакансии Ozon Tech</span>
+                        </div>
+                        <div @click="openTelegram">
+                            <img src="@/assets/tg.svg" alt="tg">
+                            <span>Перейти в телеграм-канал Ozon Tech</span>
+                        </div>
+                    </div>
+                </template>
+            </TheMenu>
         </div>
     </div>
-
-    <TheMenu v-if="showMenu" @close="showMenu = false">
-        <template #title></template>
-        <template #body>
-            <div class="menu">
-                <div @click="openChat">
-                    <img src="@/assets/reload.svg" alt="reload">
-                    <span>Сыграть ещё раз</span>
-                </div>
-                <div @click="openVacancies">
-                    <img src="@/assets/op.svg" alt="item">
-                    <span>Вакансии Ozon Tech</span>
-                </div>
-                <div @click="openTelegram">
-                    <img src="@/assets/tg.svg" alt="tg">
-                    <span>Перейти в телеграм-канал Ozon Tech</span>
-                </div>
-            </div>
-        </template>
-    </TheMenu>
 </template>
 
 <script>
@@ -289,6 +298,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.desktop-background {
+    background: url('@/assets/bgg.svg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 100vh;
+
+    @media (max-width: 480px) {
+        background: none;
+    }
+
+    .logo-desktop {
+        position: absolute;
+        right: 100px;
+        top: 100px;
+
+        @media (max-width: 1440px) {
+            right: 50px;
+            top: 50px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+    }
+
+    .tg-desktop {
+        position: absolute;
+        left: 100px;
+        bottom: 50px;
+        border-radius: 31px;
+        padding: 13px 25px;
+        background: #005bff;
+        display: flex;
+        gap: 13px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        @media (max-width: 1440px) {
+            left: 30px;
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            display: none;
+        }
+
+        span {
+            font-family: var(--gte);
+            font-weight: 400;
+            font-size: 23px;
+            color: #fff;
+        }
+    }
+}
+
+.mobile-window {
+    width: 539px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 29px 29px 0 0;
+    box-shadow: 0 0 14px 0 #032b44;
+
+    @media (max-width: 1440px) {
+        width: 390px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
 .page {
     overflow: hidden;
     position: relative;
@@ -298,6 +382,14 @@ export default {
 
     // height: 100vh;
     // overflow-y: auto;
+
+    @media (max-width: 1920px) {
+        height: 90vh;
+    }
+
+    @media (max-width: 800px) {
+        height: 100vh;
+    }
 }
 
 .header {
@@ -313,6 +405,14 @@ export default {
     left: 0;
     right: 0;
     padding: 16px 20px 16px 23px;
+
+    @media (max-width: 1920px) {
+        position: static;
+    }
+
+    @media (max-width: 800px) {
+        position: fixed;
+    }
 
     &__logo-back {
         display: flex;
@@ -377,6 +477,14 @@ export default {
     align-items: center;
     margin: 150px 0 0 0;
 
+    @media (max-width: 1920px) {
+        margin: 100px 0 0 0;
+    }
+
+    @media (max-width: 800px) {
+        margin: 150px 0 0 0;
+    }
+
     .leader {
         display: flex;
         flex-direction: column;
@@ -411,6 +519,14 @@ export default {
     .first-place {
         position: absolute;
         top: 130px;
+
+        @media (max-width: 1920px) {
+            top: 100px;
+        }
+
+        @media (max-width: 800px) {
+            top: 130px;
+        }
     }
 }
 
